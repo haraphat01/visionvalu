@@ -1,0 +1,5 @@
+{
+  "name": "VisionValu: AI Property Valuation",
+  "description": "An AI-powered platform that enables users to estimate the market value of real estate by uploading property images. It uses advanced vision models to analyze visual parameters and generate a reliable property valuation range in seconds.",
+  "requestFramePermissions": []
+}
