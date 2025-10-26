@@ -2,6 +2,7 @@
 
 import React, { useState, useCallback } from 'react';
 import { getPropertyValuation, generateDetailedReport } from '../services/geminiService';
+import { v4 as uuidv4 } from 'uuid';
 import type { ValuationResult, PropertyDetails } from '../types';
 import ImageUploader from './ImageUploader';
 import Loader from './Loader';
@@ -56,7 +57,7 @@ const ValuationApp: React.FC = () => {
 
       const newReport: ValuationResult = {
         ...valuationData,
-        id: new Date().toISOString() + Math.random(),
+        id: uuidv4(),
         timestamp: new Date().toISOString(),
         previewImage: `data:image/jpeg;base64,${base64Images[0]}`,
         propertyDetails: propertyDetails,
