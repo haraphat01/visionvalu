@@ -1,10 +1,10 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import type { ValuationResult, PropertyDetails, GroundingSource } from '../types';
 
-const API_KEY = process.env.API_KEY;
+const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 
 if (!API_KEY) {
-  throw new Error("API_KEY environment variable not set.");
+  throw new Error("GEMINI_API_KEY environment variable not set.");
 }
 
 const ai = new GoogleGenAI({ apiKey: API_KEY });

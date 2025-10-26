@@ -3,46 +3,36 @@ import React from 'react';
 const FeatureComparison: React.FC = () => {
   const features = [
     {
-      category: 'Valuations',
+      category: 'Credits & Valuations',
       items: [
-        { name: 'Property valuations included', basic: '5', professional: '25', enterprise: '100' },
-        { name: 'AI analysis accuracy', basic: '95%', professional: '95%', enterprise: '98%' },
-        { name: 'Market trend analysis', basic: 'Standard', professional: 'Advanced', enterprise: 'Premium' }
+        { name: 'Credits included', basic: '10', starter: '35', professional: '110' },
+        { name: 'Property valuations', basic: '2', starter: '7', professional: '22' },
+        { name: 'Cost per valuation', basic: '5 credits', starter: '5 credits', professional: '5 credits' }
       ]
     },
     {
-      category: 'Reports',
+      category: 'Features',
       items: [
-        { name: 'PDF report generation', basic: '✓', professional: '✓', enterprise: '✓' },
-        { name: 'Custom report templates', basic: '✗', professional: '✓', enterprise: '✓' },
-        { name: 'White-label reports', basic: '✗', professional: '✗', enterprise: '✓' },
-        { name: 'Bulk report generation', basic: '✗', professional: '✓', enterprise: '✓' }
+        { name: 'AI-powered analysis', basic: '✓', starter: '✓', professional: '✓' },
+        { name: 'Market trend analysis', basic: '✓', starter: '✓', professional: '✓' },
+        { name: 'Detailed PDF reports', basic: '✓', starter: '✓', professional: '✓' },
+        { name: '95% accuracy rate', basic: '✓', starter: '✓', professional: '✓' }
       ]
     },
     {
-      category: 'Support',
+      category: 'Support & Guarantees',
       items: [
-        { name: 'Email support', basic: '✓', professional: '✓', enterprise: '✓' },
-        { name: 'Priority support', basic: '✗', professional: '✓', enterprise: '✓' },
-        { name: 'Dedicated support', basic: '✗', professional: '✗', enterprise: '✓' },
-        { name: 'Phone support', basic: '✗', professional: '✗', enterprise: '✓' }
-      ]
-    },
-    {
-      category: 'Advanced Features',
-      items: [
-        { name: 'API access', basic: '✗', professional: '✗', enterprise: '✓' },
-        { name: 'Team collaboration', basic: '✗', professional: '✓', enterprise: '✓' },
-        { name: 'Custom integrations', basic: '✗', professional: '✗', enterprise: '✓' },
-        { name: 'Advanced analytics', basic: 'Basic', professional: 'Advanced', enterprise: 'Premium' }
+        { name: 'Email support', basic: '✓', starter: '✓', professional: '✓' },
+        { name: '30-day money-back guarantee', basic: '✓', starter: '✓', professional: '✓' },
+        { name: 'Credits never expire', basic: '✓', starter: '✓', professional: '✓' }
       ]
     }
   ];
 
   const plans = [
-    { name: 'Starter Pack', price: '$29', description: '5 property valuations' },
-    { name: 'Professional Pack', price: '$99', description: '25 property valuations' },
-    { name: 'Enterprise Pack', price: '$299', description: '100 property valuations' }
+    { name: 'Basic Pack', price: '$10', description: '10 credits (2 valuations)' },
+    { name: 'Starter Pack', price: '$29', description: '35 credits (7 valuations)' },
+    { name: 'Professional Pack', price: '$99', description: '110 credits (22 valuations)' }
   ];
 
   return (
@@ -97,6 +87,17 @@ const FeatureComparison: React.FC = () => {
                     </div>
                     <div className="text-center">
                       <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                        item.starter === '✓' 
+                          ? 'bg-green-100 text-green-800' 
+                          : item.starter === '✗'
+                          ? 'bg-red-100 text-red-800'
+                          : 'bg-slate-100 text-slate-800'
+                      }`}>
+                        {item.starter}
+                      </span>
+                    </div>
+                    <div className="text-center">
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${
                         item.professional === '✓' 
                           ? 'bg-green-100 text-green-800' 
                           : item.professional === '✗'
@@ -104,17 +105,6 @@ const FeatureComparison: React.FC = () => {
                           : 'bg-slate-100 text-slate-800'
                       }`}>
                         {item.professional}
-                      </span>
-                    </div>
-                    <div className="text-center">
-                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                        item.enterprise === '✓' 
-                          ? 'bg-green-100 text-green-800' 
-                          : item.enterprise === '✗'
-                          ? 'bg-red-100 text-red-800'
-                          : 'bg-slate-100 text-slate-800'
-                      }`}>
-                        {item.enterprise}
                       </span>
                     </div>
                   </div>
@@ -138,8 +128,8 @@ const FeatureComparison: React.FC = () => {
                 </button>
               </div>
               <div className="text-center">
-                <button className="w-full bg-slate-800 hover:bg-slate-900 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200">
-                  Contact Sales
+                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200">
+                  Choose Plan
                 </button>
               </div>
             </div>
@@ -162,7 +152,7 @@ const FeatureComparison: React.FC = () => {
             </div>
             <div className="flex items-center gap-2">
               <span className="text-green-500">✓</span>
-              <span>24/7 support</span>
+              <span>5 credits per valuation</span>
             </div>
           </div>
         </div>

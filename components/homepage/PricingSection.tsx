@@ -3,45 +3,45 @@ import React from 'react';
 const PricingSection: React.FC = () => {
   const creditPackages = [
     {
+      name: 'Basic Pack',
+      credits: 10,
+      price: 10,
+      originalPrice: 15,
+      popular: false,
+      features: [
+        '2 property valuations',
+        'AI-powered market analysis',
+        'Detailed PDF reports',
+        'Email support',
+        '30-day money-back guarantee'
+      ]
+    },
+    {
       name: 'Starter Pack',
-      credits: 5,
+      credits: 35,
       price: 29,
       originalPrice: 39,
       popular: false,
       features: [
-        '5 property valuations',
-        'Basic market analysis',
-        'PDF reports',
-        'Email support'
+        '7 property valuations',
+        'AI-powered market analysis',
+        'Detailed PDF reports',
+        'Email support',
+        '30-day money-back guarantee'
       ]
     },
     {
       name: 'Professional Pack',
-      credits: 25,
+      credits: 110,
       price: 99,
       originalPrice: 149,
       popular: true,
       features: [
-        '25 property valuations',
-        'Advanced market analysis',
+        '22 property valuations',
+        'AI-powered market analysis',
         'Detailed PDF reports',
-        'Priority support',
-        'Bulk upload support'
-      ]
-    },
-    {
-      name: 'Enterprise Pack',
-      credits: 100,
-      price: 299,
-      originalPrice: 399,
-      popular: false,
-      features: [
-        '100 property valuations',
-        'Premium market analysis',
-        'Custom report templates',
-        'Dedicated support',
-        'API access',
-        'Team collaboration'
+        'Email support',
+        '30-day money-back guarantee'
       ]
     }
   ];
@@ -55,7 +55,7 @@ const PricingSection: React.FC = () => {
             Pay-as-You-Go Pricing
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            Purchase credits and use them whenever you need. No subscriptions, no monthly commitments.
+            Purchase credits and use them whenever you need. Each property valuation costs 5 credits. No subscriptions, no monthly commitments.
           </p>
         </div>
 
@@ -85,7 +85,8 @@ const PricingSection: React.FC = () => {
                     <span className="text-4xl font-bold text-slate-900">${pkg.price}</span>
                     <span className="text-slate-500 line-through">${pkg.originalPrice}</span>
                   </div>
-                  <div className="text-slate-600">{pkg.credits} Property Valuations</div>
+                  <div className="text-slate-600 mb-2">{pkg.credits} Credits</div>
+                  <div className="text-sm text-slate-500">5 credits per valuation</div>
                 </div>
 
                 <ul className="space-y-3 mb-8">
