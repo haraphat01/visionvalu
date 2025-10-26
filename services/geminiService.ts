@@ -140,6 +140,10 @@ export const getPropertyValuation = async (images: string[], details: PropertyDe
       config,
     });
 
+    if (!response.text) {
+      throw new Error("No response text received from AI service.");
+    }
+    
     const jsonText = response.text.trim();
     // If grounding is used, the model might wrap the JSON in markdown backticks.
     const cleanJsonText = jsonText.replace(/^```json\s*|```$/g, '');
@@ -203,6 +207,11 @@ export const generateDetailedReport = async (valuation: ValuationResult): Promis
       model: 'gemini-2.5-flash',
       contents: prompt,
     });
+    
+    if (!response.text) {
+      throw new Error("No response text received from AI service.");
+    }
+    
     return response.text;
   } catch (error) {
     console.error("Error generating detailed report:", error);
