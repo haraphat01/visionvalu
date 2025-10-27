@@ -25,8 +25,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onNavigateToApp }) => {
             
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-slate-900 mb-6 leading-tight">
               <span className="block">AI-Powered</span>
-              <span className="block gradient-text">Property Valuation</span>
-              <span className="block text-3xl sm:text-4xl lg:text-5xl font-normal text-slate-600 mt-2">in Seconds</span>
+              <span className="block gradient-text">HomeWorth</span>
+              <span className="block text-3xl sm:text-4xl lg:text-5xl font-normal text-slate-600 mt-2">Property Valuation</span>
             </h1>
             
             <p className="text-xl sm:text-2xl text-slate-600 mb-8 max-w-3xl mx-auto leading-relaxed">

@@ -45,7 +45,7 @@ const FeaturesOverview: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-6">
-            Why Choose VisionValu?
+            Why Choose HomeWorth?
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
             Our AI-powered platform revolutionizes property valuation with speed, accuracy, and affordability.
@@ -77,7 +77,7 @@ const FeaturesOverview: React.FC = () => {
               Trusted by Thousands
             </h3>
             <p className="text-slate-600">
-              Join the growing community of professionals using VisionValu
+              Join the growing community of professionals using HomeWorth
             </p>
           </div>
           

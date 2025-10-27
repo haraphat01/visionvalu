@@ -27,7 +27,7 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 3. **Set up Webhook**:
    - Go to Developers > Webhooks
    - Click "Add endpoint"
-   - Set the endpoint URL to: `https://yourdomain.com/api/stripe/webhook`
+   - Set the endpoint URL to: `https://yourdomain.comt `
    - Select events: `checkout.session.completed`
    - Copy the webhook signing secret and add it to `.env.local`
 

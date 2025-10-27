@@ -1,4 +1,4 @@
-# VisionValu - AI Property Valuation Platform
+# HomeWorth - AI Property Valuation Platform
 
 <div align="center">
 <img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
@@ -38,7 +38,7 @@ A comprehensive AI-powered property valuation platform built with Next.js, Supab
 
 ```bash
 git clone <your-repo-url>
-cd visionvalu_-ai-property-valuation
+cd homeworth-ai-property-valuation
 npm install
 ```
 
@@ -210,4 +210,4 @@ This project is licensed under the MIT License.
 
 ## Support
 
-For support, email support@visionvalu.com or create an issue in the repository.
+For support, email support@homeworth.com or create an issue in the repository.

@@ -1,4 +1,4 @@
--- VisionValu Database Schema - Credit-Based System
+-- HomeWorth Database Schema - Credit-Based System
 -- Based on homepage pricing: 5 credits per valuation
 
 -- Create users table (extends Supabase auth.users)

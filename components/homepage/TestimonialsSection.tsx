@@ -8,7 +8,7 @@ const TestimonialsSection: React.FC = () => {
       company: 'Premier Properties',
       image: '👩‍💼',
       rating: 5,
-      text: 'VisionValu has revolutionized how I present properties to clients. The AI analysis is incredibly accurate and saves me hours of research. My clients love the detailed reports!',
+      text: 'HomeWorth has revolutionized how I present properties to clients. The AI analysis is incredibly accurate and saves me hours of research. My clients love the detailed reports!',
       location: 'San Francisco, CA'
     },
     {
@@ -17,7 +17,7 @@ const TestimonialsSection: React.FC = () => {
       company: 'Urban Development Co.',
       image: '👨‍💼',
       rating: 5,
-      text: 'As a developer, I need quick, accurate valuations for multiple properties. VisionValu delivers professional-grade analysis in minutes. It\'s become an essential tool in my workflow.',
+      text: 'As a developer, I need quick, accurate valuations for multiple properties. HomeWorth delivers professional-grade analysis in minutes. It\'s become an essential tool in my workflow.',
       location: 'Austin, TX'
     },
     {
@@ -35,7 +35,7 @@ const TestimonialsSection: React.FC = () => {
       company: 'Thompson Properties',
       image: '👨‍🏢',
       rating: 5,
-      text: 'Managing 200+ properties requires efficient valuation processes. VisionValu\'s bulk upload feature and detailed reports have streamlined our operations significantly.',
+      text: 'Managing 200+ properties requires efficient valuation processes. HomeWorth\'s bulk upload feature and detailed reports have streamlined our operations significantly.',
       location: 'Seattle, WA'
     },
     {
@@ -53,7 +53,7 @@ const TestimonialsSection: React.FC = () => {
       company: 'Wilson Appraisals',
       image: '👨‍💼',
       rating: 5,
-      text: 'As a traditional appraiser, I was skeptical of AI valuations. But VisionValu\'s accuracy and detailed analysis have made it a valuable tool in my practice.',
+      text: 'As a traditional appraiser, I was skeptical of AI valuations. But HomeWorth\'s accuracy and detailed analysis have made it a valuable tool in my practice.',
       location: 'Chicago, IL'
     }
   ];
@@ -73,7 +73,7 @@ const TestimonialsSection: React.FC = () => {
             What Our Customers Say
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            Join thousands of real estate professionals who trust VisionValu for accurate, fast property valuations.
+            Join thousands of real estate professionals who trust HomeWorth for accurate, fast property valuations.
           </p>
         </div>
 

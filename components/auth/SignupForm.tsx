@@ -53,7 +53,7 @@ export default function SignupForm() {
               Create your account
             </h2>
             <p className="text-gray-600">
-              Join VisionValu and start valuing properties
+              Join HomeWorth and start valuing properties
             </p>
           </div>
 

@@ -12,7 +12,7 @@ const HomepageHeader: React.FC<HomepageHeaderProps> = ({ onNavigateToApp }) => {
           <div className="flex items-center space-x-3">
             <span className="text-3xl">🏠</span>
             <h1 className="text-2xl font-bold text-slate-800">
-              VisionValu
+              HomeWorth
             </h1>
           </div>
           <nav className="hidden md:flex items-center space-x-8">

@@ -13,7 +13,7 @@ const CTASection: React.FC<CTASectionProps> = ({ onNavigateToApp }) => {
             Ready to Transform Your Property Valuation Process?
           </h2>
           <p className="text-xl text-blue-100 mb-12 max-w-3xl mx-auto">
-            Join thousands of real estate professionals who are already using VisionValu 
+            Join thousands of real estate professionals who are already using HomeWorth 
             to get faster, more accurate property valuations. Start your free trial today.
           </p>
           

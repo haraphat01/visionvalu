@@ -50,7 +50,7 @@ export default function LoginForm() {
               Welcome back
             </h2>
             <p className="text-gray-600">
-              Sign in to your VisionValu account
+              Sign in to your HomeWorth account
             </p>
           </div>
 

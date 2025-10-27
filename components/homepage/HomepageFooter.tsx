@@ -9,7 +9,7 @@ const HomepageFooter: React.FC = () => {
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
               <span className="text-3xl">🏠</span>
-              <h3 className="text-2xl font-bold">VisionValu</h3>
+              <h3 className="text-2xl font-bold">HomeWorth</h3>
             </div>
             <p className="text-slate-300 mb-6 max-w-md">
               AI-powered property valuation platform that delivers accurate, instant property assessments 
@@ -58,7 +58,7 @@ const HomepageFooter: React.FC = () => {
         <div className="border-t border-slate-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-slate-400 text-sm">
-              © 2024 VisionValu. All rights reserved.
+              © 2024 HomeWorth. All rights reserved.
             </div>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a href="#" className="text-slate-400 hover:text-white text-sm transition-colors duration-200">Privacy Policy</a>

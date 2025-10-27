@@ -101,7 +101,7 @@ const ValuationApp: React.FC = () => {
               </svg>
             </div>
             <div>
-              <h2 className="text-3xl font-bold gradient-text mb-1">AI Property Valuation</h2>
+              <h2 className="text-3xl font-bold gradient-text mb-1">HomeWorth AI Valuation</h2>
               <p className="text-gray-600">
                 Upload property images and get an instant AI-powered valuation
               </p>

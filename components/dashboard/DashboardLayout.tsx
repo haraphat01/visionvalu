@@ -48,7 +48,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">V</span>
               </div>
-              <h1 className="text-xl font-bold gradient-text">VisionValu</h1>
+              <h1 className="text-xl font-bold gradient-text">HomeWorth</h1>
             </div>
             <button
               onClick={() => setSidebarOpen(false)}
@@ -107,7 +107,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">V</span>
               </div>
-              <h1 className="text-xl font-bold gradient-text">VisionValu</h1>
+              <h1 className="text-xl font-bold gradient-text">HomeWorth</h1>
             </div>
           </div>
           <nav className="flex-1 space-y-2 px-4 py-6">
