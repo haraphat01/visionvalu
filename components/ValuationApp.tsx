@@ -89,44 +89,68 @@ const ValuationApp: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="bg-white rounded-lg shadow-sm border p-6">
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Property Valuation</h2>
-          <p className="text-gray-600">
-            Upload property images and get an AI-powered valuation.
-          </p>
+    <div className="max-w-6xl mx-auto">
+      <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-gray-200/50 overflow-hidden">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-8 py-6 border-b border-gray-200/50">
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+            <div>
+              <h2 className="text-3xl font-bold gradient-text mb-1">AI Property Valuation</h2>
+              <p className="text-gray-600">
+                Upload property images and get an instant AI-powered valuation
+              </p>
+            </div>
+          </div>
         </div>
 
-        <ImageUploader 
-          onImagesChange={handleImagesChange}
-          onDetailsChange={handleDetailsChange}
-          onSubmit={handleGetValuation}
-          isLoading={isLoading}
-        />
+        {/* Main Content */}
+        <div className="p-8">
+          <ImageUploader 
+            onImagesChange={handleImagesChange}
+            onDetailsChange={handleDetailsChange}
+            onSubmit={handleGetValuation}
+            isLoading={isLoading}
+          />
 
-        {error && (
-          <div className="mt-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
-            <p className="font-semibold">Error</p>
-            <p>{error}</p>
-          </div>
-        )}
+          {error && (
+            <div className="mt-8 p-6 bg-red-50 border border-red-200 rounded-2xl">
+              <div className="flex items-start">
+                <svg className="w-6 h-6 text-red-400 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <div>
+                  <h3 className="text-lg font-semibold text-red-800 mb-2">Valuation Error</h3>
+                  <p className="text-red-700">{error}</p>
+                </div>
+              </div>
+            </div>
+          )}
 
-        {isLoading && (
-          <div className="mt-6">
-            <Loader />
-          </div>
-        )}
+          {isLoading && (
+            <div className="mt-8">
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 text-center">
+                <Loader />
+                <p className="text-gray-600 mt-4 font-medium">Analyzing your property...</p>
+              </div>
+            </div>
+          )}
 
-        {currentValuation && (
-          <div className="mt-6">
-            <ValuationReport 
-              report={currentValuation}
-              onGenerateReport={handleGenerateReport}
-              isGeneratingReport={isGeneratingReport}
-            />
-          </div>
-        )}
+          {currentValuation && (
+            <div className="mt-8 fade-in">
+              <ValuationReport 
+                report={currentValuation}
+                onGenerateReport={handleGenerateReport}
+                isGeneratingReport={isGeneratingReport}
+              />
+            </div>
+          )}
+        </div>
       </div>
 
       <ReportModal

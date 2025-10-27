@@ -9,6 +9,8 @@ CREATE TABLE IF NOT EXISTS public.users (
   avatar_url TEXT,
   credits INTEGER DEFAULT 5 NOT NULL, -- 5 free credits for new users
   total_credits_purchased INTEGER DEFAULT 0, -- Track total credits ever purchased
+  stripe_customer_id TEXT UNIQUE, -- Stripe customer ID for payments
+  subscription_status TEXT DEFAULT 'inactive', -- Track subscription status
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
@@ -141,32 +143,47 @@ DROP FUNCTION IF EXISTS public.handle_new_user();
 -- Create function to handle new user registration
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
+DECLARE
+  user_full_name TEXT;
 BEGIN
+  -- Extract full name from various possible sources
+  user_full_name := COALESCE(
+    NEW.raw_user_meta_data->>'full_name',
+    NEW.raw_user_meta_data->>'name',
+    NEW.raw_user_meta_data->>'display_name',
+    split_part(NEW.email, '@', 1)
+  );
+
+  -- Insert or update user profile
   INSERT INTO public.users (
     id, 
     email, 
     full_name, 
     credits,
     total_credits_purchased,
+    stripe_customer_id,
+    subscription_status,
     created_at,
     updated_at
   )
   VALUES (
     NEW.id,
     NEW.email,
-    COALESCE(
-      NEW.raw_user_meta_data->>'full_name', 
-      NEW.raw_user_meta_data->>'name',
-      split_part(NEW.email, '@', 1)
-    ),
+    user_full_name,
     5, -- 5 free credits for new users
     0, -- No credits purchased yet
+    NULL, -- Will be set when first purchase is made
+    'inactive', -- Default subscription status
     NOW(),
     NOW()
   )
   ON CONFLICT (id) DO UPDATE SET
     email = EXCLUDED.email,
+    full_name = COALESCE(EXCLUDED.full_name, public.users.full_name),
     updated_at = NOW();
+  
+  -- Log successful user creation
+  RAISE LOG 'Successfully created/updated user profile for %: %', NEW.id, NEW.email;
   
   RETURN NEW;
 EXCEPTION
@@ -181,6 +198,11 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+
+-- Add missing columns to users table if they don't exist
+ALTER TABLE public.users 
+ADD COLUMN IF NOT EXISTS stripe_customer_id TEXT UNIQUE,
+ADD COLUMN IF NOT EXISTS subscription_status TEXT DEFAULT 'inactive';
 
 -- Insert default credit packages
 INSERT INTO public.credit_packages (name, credits, price_cents, original_price_cents, popular, active) VALUES

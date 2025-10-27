@@ -35,6 +35,9 @@ export async function POST(request: Request) {
           const credits = parseInt(session.metadata?.credits || '0')
           
           if (credits > 0) {
+            // Get the payment intent ID for tracking
+            const paymentIntentId = session.payment_intent as string
+            
             // Use the database function to add credits
             const { error: addCreditsError } = await supabase.rpc('add_credits', {
               user_id: userId,
@@ -45,6 +48,19 @@ export async function POST(request: Request) {
 
             if (addCreditsError) {
               console.error('Error adding credits:', addCreditsError)
+            } else {
+              // Update the transaction with payment intent ID
+              if (paymentIntentId) {
+                await supabase
+                  .from('credit_transactions')
+                  .update({ stripe_payment_intent_id: paymentIntentId })
+                  .eq('user_id', userId)
+                  .eq('package_id', packageId)
+                  .eq('type', 'purchased')
+                  .order('created_at', { ascending: false })
+                  .limit(1)
+              }
+              console.log(`Successfully added ${credits} credits for user ${userId}`)
             }
           }
         }

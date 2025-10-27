@@ -67,8 +67,26 @@ export interface User {
   credits: number;
   total_credits_purchased: number;
   stripe_customer_id?: string;
+  subscription_status?: string;
+  subscription_plan?: string;
   created_at: string;
   updated_at: string;
+}
+
+// Supabase Auth User type (from auth.users)
+export interface AuthUser {
+  id: string;
+  email?: string;
+  user_metadata?: {
+    full_name?: string;
+    name?: string;
+    display_name?: string;
+  };
+  raw_user_meta_data?: {
+    full_name?: string;
+    name?: string;
+    display_name?: string;
+  };
 }
 
 export interface CreditPackage {
