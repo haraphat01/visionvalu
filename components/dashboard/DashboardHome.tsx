@@ -30,7 +30,12 @@ export default function DashboardHome() {
 
   const recentReports = reports.slice(0, 5)
   const totalValue = reports.reduce((sum, report) => {
-    return sum + (report.estimatedValueRange.min + report.estimatedValueRange.max) / 2
+    if (report.estimatedValueRange) {
+      return sum + (report.estimatedValueRange.min + report.estimatedValueRange.max) / 2
+    } else if (report.estimated_value_min && report.estimated_value_max) {
+      return sum + (report.estimated_value_min + report.estimated_value_max) / 2
+    }
+    return sum
   }, 0)
 
   if (userLoading) {
@@ -188,10 +193,15 @@ export default function DashboardHome() {
                     </div>
                     <div className="text-right">
                       <p className="text-lg font-semibold text-gray-900">
-                        ${report.estimatedValueRange.min.toLocaleString()} - ${report.estimatedValueRange.max.toLocaleString()}
+                        {report.estimatedValueRange 
+                          ? `$${report.estimatedValueRange.min.toLocaleString()} - $${report.estimatedValueRange.max.toLocaleString()}`
+                          : (report.estimated_value_min && report.estimated_value_max)
+                          ? `$${report.estimated_value_min.toLocaleString()} - $${report.estimated_value_max.toLocaleString()}`
+                          : 'Value not available'
+                        }
                       </p>
                       <p className="text-sm text-gray-500">
-                        {report.confidenceScore}% confidence
+                        {(report.confidenceScore || report.confidence_score || 0)}% confidence
                       </p>
                     </div>
                   </div>

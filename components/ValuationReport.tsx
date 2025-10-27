@@ -127,7 +127,12 @@ const ValuationReport: React.FC<ValuationReportProps> = ({ report, onGenerateRep
                 <div className="bg-slate-50 border border-slate-200 p-6 rounded-lg mb-6">
                     <p className="text-sm font-medium text-slate-500">Estimated Value Range</p>
                     <p className="text-4xl font-extrabold text-sky-600 tracking-tight">
-                        {formatCurrency(report.estimatedValueRange.min, report.currency)} - {formatCurrency(report.estimatedValueRange.max, report.currency)}
+                        {report.estimatedValueRange 
+                          ? `${formatCurrency(report.estimatedValueRange.min, report.currency)} - ${formatCurrency(report.estimatedValueRange.max, report.currency)}`
+                          : (report.estimated_value_min && report.estimated_value_max)
+                          ? `${formatCurrency(report.estimated_value_min, report.currency)} - ${formatCurrency(report.estimated_value_max, report.currency)}`
+                          : 'Value not available'
+                        }
                     </p>
                 </div>
 

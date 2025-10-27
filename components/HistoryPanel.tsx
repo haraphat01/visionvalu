@@ -56,9 +56,14 @@ const HistoryPanel: React.FC<HistoryPanelProps> = ({ history, onSelect, onClear,
             </div>
             <div className="text-right">
               <p className="font-bold text-lg text-sky-700">
-                {formatCurrency(item.estimatedValueRange.min, item.currency)} - {formatCurrency(item.estimatedValueRange.max, item.currency)}
+                {item.estimatedValueRange 
+                  ? `${formatCurrency(item.estimatedValueRange.min, item.currency)} - ${formatCurrency(item.estimatedValueRange.max, item.currency)}`
+                  : (item.estimated_value_min && item.estimated_value_max)
+                  ? `${formatCurrency(item.estimated_value_min, item.currency)} - ${formatCurrency(item.estimated_value_max, item.currency)}`
+                  : 'Value not available'
+                }
               </p>
-              <p className="text-xs text-slate-500">Confidence: {item.confidenceScore}%</p>
+              <p className="text-xs text-slate-500">Confidence: {(item.confidenceScore || item.confidence_score || 0)}%</p>
             </div>
           </button>
         ))}

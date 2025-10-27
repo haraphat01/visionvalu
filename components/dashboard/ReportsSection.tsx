@@ -88,10 +88,10 @@ export default function ReportsSection() {
             `Estimated Value: ${(report.estimatedValueRange || (report.estimated_value_min && report.estimated_value_max)) ? 
               (report.estimatedValueRange 
                 ? `$${report.estimatedValueRange.min.toLocaleString()} - $${report.estimatedValueRange.max.toLocaleString()}`
-                : `$${report.estimated_value_min.toLocaleString()} - $${report.estimated_value_max.toLocaleString()}`) : 
+                : `$${report.estimated_value_min?.toLocaleString() || '0'} - $${report.estimated_value_max?.toLocaleString() || '0'}`) : 
               'Not available'}\n` +
             `Confidence: ${report.confidenceScore || report.confidence_score || 0}%\n` +
-            `Date: ${(report.timestamp || report.created_at) ? new Date(report.timestamp || report.created_at).toLocaleDateString() : 'Not available'}\n\n` +
+            `Date: ${(report.timestamp || report.created_at) ? new Date(report.timestamp || report.created_at || '').toLocaleDateString() : 'Not available'}\n\n` +
             `Analysis: ${report.reasoning || report.detailed_report || 'No analysis available'}`,
       url: window.location.origin + `/dashboard/reports?report=${report.id}`
     }
@@ -155,7 +155,7 @@ export default function ReportsSection() {
                         <div>
                           <p className="text-sm text-gray-500">Date</p>
                           <p className="font-medium">
-                            {(report.timestamp || report.created_at) ? new Date(report.timestamp || report.created_at).toLocaleDateString() : 'Not available'}
+                            {(report.timestamp || report.created_at) ? new Date(report.timestamp || report.created_at || '').toLocaleDateString() : 'Not available'}
                           </p>
                         </div>
                       </div>
@@ -166,7 +166,7 @@ export default function ReportsSection() {
                           <p className="text-2xl font-bold text-green-600">
                             {report.estimatedValueRange 
                               ? `$${report.estimatedValueRange.min.toLocaleString()} - $${report.estimatedValueRange.max.toLocaleString()}`
-                              : `$${report.estimated_value_min.toLocaleString()} - $${report.estimated_value_max.toLocaleString()}`
+                              : `$${report.estimated_value_min?.toLocaleString() || '0'} - $${report.estimated_value_max?.toLocaleString() || '0'}`
                             }
                           </p>
                         ) : (

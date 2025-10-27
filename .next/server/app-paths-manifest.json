@@ -1,9 +1,9 @@
 {
-  "/login/page": "app/login/page.js",
-  "/dashboard/page": "app/dashboard/page.js",
+  "/dashboard/valuation/page": "app/dashboard/valuation/page.js",
+  "/dashboard/credits/page": "app/dashboard/credits/page.js",
+  "/api/reports/[id]/route": "app/api/reports/[id]/route.js",
   "/dashboard/reports/page": "app/dashboard/reports/page.js",
   "/api/reports/route": "app/api/reports/route.js",
-  "/signup/page": "app/signup/page.js",
-  "/dashboard/valuation/page": "app/dashboard/valuation/page.js",
-  "/api/valuation/generate-report/route": "app/api/valuation/generate-report/route.js"
+  "/dashboard/settings/page": "app/dashboard/settings/page.js",
+  "/login/page": "app/login/page.js"
 }
