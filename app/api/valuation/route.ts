@@ -33,7 +33,8 @@ export async function POST(request: Request) {
   if (userData.credits < 5) {
     return NextResponse.json({ 
       error: 'Insufficient credits. You need 5 credits for a property valuation.',
-      creditsNeeded: 5 - userData.credits
+      creditsNeeded: 5 - userData.credits,
+      currentCredits: userData.credits
     }, { status: 400 })
   }
 
@@ -66,7 +67,7 @@ export async function POST(request: Request) {
     }
 
     // Deduct 5 credits using the database function
-    const { error: spendCreditsError } = await supabase.rpc('spend_credits', {
+    const { data: spendResult, error: spendCreditsError } = await supabase.rpc('spend_credits', {
       user_id: user.id,
       amount: 5,
       description: 'Property valuation report'
@@ -74,6 +75,16 @@ export async function POST(request: Request) {
 
     if (spendCreditsError) {
       return NextResponse.json({ error: spendCreditsError.message }, { status: 500 })
+    }
+
+    // spend_credits returns boolean; if false, user no longer has enough credits (race condition)
+    if (spendResult === false) {
+      const { data: refreshedUser } = await supabase.from('users').select('credits').eq('id', user.id).single()
+      return NextResponse.json({ 
+        error: 'Insufficient credits. You need 5 credits for a property valuation.',
+        creditsNeeded: 5 - (refreshedUser?.credits ?? 0),
+        currentCredits: refreshedUser?.credits ?? 0
+      }, { status: 400 })
     }
 
     return NextResponse.json({ report: newReport })

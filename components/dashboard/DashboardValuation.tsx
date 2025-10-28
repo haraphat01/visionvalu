@@ -46,11 +46,6 @@ export default function DashboardValuation() {
       return
     }
 
-    if (!user || user.credits < 5) {
-      setError("Insufficient credits. You need 5 credits for a property valuation.")
-      return
-    }
-
     setIsLoading(true)
     setError(null)
     setCurrentValuation(null)
