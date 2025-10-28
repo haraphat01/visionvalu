@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
   try {
+    console.log('Starting credit purchase request...')
     const supabase = await createClient()
     
     const { data: { user }, error: authError } = await supabase.auth.getUser()
@@ -12,6 +13,8 @@ export async function POST(request: Request) {
       console.error('Auth error:', authError)
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
+    
+    console.log('User authenticated:', { id: user.id, email: user.email })
 
     const body = await request.json()
     const { packageId } = body
@@ -32,6 +35,7 @@ export async function POST(request: Request) {
     }
 
     // Get the credit package
+    console.log('Fetching credit package:', packageId)
     const { data: creditPackage, error: packageError } = await supabase
       .from('credit_packages')
       .select('*')
@@ -45,10 +49,18 @@ export async function POST(request: Request) {
     }
 
     if (!creditPackage) {
+      console.error('Credit package not found for ID:', packageId)
       return NextResponse.json({ error: 'Credit package not found' }, { status: 404 })
     }
+    
+    console.log('Credit package found:', { 
+      name: creditPackage.name, 
+      credits: creditPackage.credits, 
+      price: creditPackage.price_cents 
+    })
 
     // Ensure user exists in users table (in case trigger didn't work)
+    console.log('Checking if user exists in users table...')
     const { data: existingUser, error: userCheckError } = await supabase
       .from('users')
       .select('*')
@@ -74,38 +86,59 @@ export async function POST(request: Request) {
         console.error('Error creating user profile:', createUserError)
         return NextResponse.json({ error: 'Failed to create user profile' }, { status: 500 })
       }
+      console.log('User profile created successfully')
+    } else {
+      console.log('User profile found:', { 
+        id: existingUser.id, 
+        email: existingUser.email, 
+        credits: existingUser.credits,
+        stripe_customer_id: existingUser.stripe_customer_id 
+      })
     }
 
     // Get or create Stripe customer
     let customerId = existingUser?.stripe_customer_id
+    console.log('Stored Stripe customer ID:', customerId)
 
-    if (!customerId) {
-      try {
-        const customer = await stripe.customers.create({
-          email: user.email,
-          metadata: {
-            supabase_user_id: user.id,
-          },
-        })
-        customerId = customer.id
+    // Always create a new customer in test mode to avoid live/test mode conflicts
+    console.log('Creating new Stripe customer in test mode...')
+    try {
+      const customer = await stripe.customers.create({
+        email: user.email,
+        metadata: {
+          supabase_user_id: user.id,
+        },
+      })
+      customerId = customer.id
+      console.log('Stripe customer created:', customerId)
 
-        // Update user with Stripe customer ID
-        const { error: updateError } = await supabase
-          .from('users')
-          .update({ stripe_customer_id: customerId })
-          .eq('id', user.id)
+      // Update user with new Stripe customer ID
+      const { error: updateError } = await supabase
+        .from('users')
+        .update({ stripe_customer_id: customerId })
+        .eq('id', user.id)
 
-        if (updateError) {
-          console.error('Error updating user with Stripe customer ID:', updateError)
-          // Continue anyway, we have the customer ID
-        }
-      } catch (stripeError) {
-        console.error('Error creating Stripe customer:', stripeError)
-        return NextResponse.json({ error: 'Failed to create customer' }, { status: 500 })
+      if (updateError) {
+        console.error('Error updating user with Stripe customer ID:', updateError)
+        // Continue anyway, we have the customer ID
+      } else {
+        console.log('User updated with new Stripe customer ID')
       }
+    } catch (stripeError) {
+      console.error('Error creating Stripe customer:', stripeError)
+      return NextResponse.json({ error: 'Failed to create customer' }, { status: 500 })
     }
 
     // Create checkout session for credit purchase
+    console.log('Creating Stripe checkout session with:', {
+      customerId,
+      packageId,
+      credits: creditPackage.credits,
+      price: creditPackage.price_cents,
+      successUrl: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/credits?success=true`,
+      cancelUrl: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/credits?canceled=true`
+    })
+
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       payment_method_types: ['card'],
@@ -133,11 +166,26 @@ export async function POST(request: Request) {
       },
     })
 
+    console.log('Stripe checkout session created successfully:', session.id)
+
     return NextResponse.json({ sessionId: session.id })
   } catch (error) {
     console.error('Error creating credit purchase session:', error)
+    
+    // Handle specific Stripe errors
+    if (error instanceof Error) {
+      console.error('Error details:', {
+        message: error.message,
+        name: error.name,
+        stack: error.stack
+      })
+    }
+    
     return NextResponse.json(
-      { error: 'Failed to create checkout session' },
+      { 
+        error: 'Failed to create checkout session',
+        details: error instanceof Error ? error.message : 'Unknown error'
+      },
       { status: 500 }
     )
   }
