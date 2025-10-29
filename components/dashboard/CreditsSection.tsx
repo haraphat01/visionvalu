@@ -46,7 +46,7 @@ export default function CreditsSection() {
 
   const fetchCreditPackages = async () => {
     try {
-      const response = await fetch('/api/credits/packages')
+      const response = await fetch('/api/credits/packages', { cache: 'force-cache' })
       if (response.ok) {
         const data = await response.json()
         setCreditPackages(data.packages || [])

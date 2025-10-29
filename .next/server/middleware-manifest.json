@@ -17,15 +17,43 @@
       "wasm": [],
       "assets": [],
       "env": {
-        "__NEXT_BUILD_ID": "ihIfKYa2O3eSGnAG76tFF",
-        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "1YzmZ25J8TsETbivJYwJ9DA9VeCtcA8j4jtcoe80kws=",
-        "__NEXT_PREVIEW_MODE_ID": "8b4158f2ebbbf80545d132a41388a54d",
-        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "c192fc0ad3a5ed6abdbf8bf4f206b98eacba7e579c28d1def09fab8b10bc3a0b",
-        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "9d510dafb5dfd128b679276bd550cf58c8ea3eecb5c964f6a525a13cbfd51884"
+        "__NEXT_BUILD_ID": "03QthZlUFQjosr3dkXQUe",
+        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "eMRNmZDHAieGEjhaWjXEDJe/08z1vzoRy8AoSgBYOfo=",
+        "__NEXT_PREVIEW_MODE_ID": "358c7b084e8828e8d6d2d2f05bf1accd",
+        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "2ec1bf98ff245ebda4cf6a84c6cb4793438c3d09bcd96a187071a0fa690fc08f",
+        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "c4faf0114ae48438a5ca67f74c2c0c44f1fbd403bafe16d56e325dd23867b945"
       }
     }
   },
-  "functions": {},
+  "functions": {
+    "/api/credits/packages/route": {
+      "files": [
+        "server/middleware-build-manifest.js",
+        "server/middleware-react-loadable-manifest.js",
+        "server/next-font-manifest.js",
+        "server/interception-route-rewrite-manifest.js",
+        "server/edge-runtime-webpack.js",
+        "server/app/api/credits/packages/route.js"
+      ],
+      "name": "app/api/credits/packages/route",
+      "page": "/api/credits/packages/route",
+      "matchers": [
+        {
+          "regexp": "^/api/credits/packages$",
+          "originalSource": "/api/credits/packages"
+        }
+      ],
+      "wasm": [],
+      "assets": [],
+      "env": {
+        "__NEXT_BUILD_ID": "03QthZlUFQjosr3dkXQUe",
+        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "eMRNmZDHAieGEjhaWjXEDJe/08z1vzoRy8AoSgBYOfo=",
+        "__NEXT_PREVIEW_MODE_ID": "358c7b084e8828e8d6d2d2f05bf1accd",
+        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "2ec1bf98ff245ebda4cf6a84c6cb4793438c3d09bcd96a187071a0fa690fc08f",
+        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "c4faf0114ae48438a5ca67f74c2c0c44f1fbd403bafe16d56e325dd23867b945"
+      }
+    }
+  },
   "sortedMiddleware": [
     "/"
   ]

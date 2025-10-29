@@ -1,12 +1,15 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 
+export const runtime = 'edge'
+export const revalidate = 300
+
 export async function GET() {
   const supabase = await createClient()
   
   const { data: packages, error } = await supabase
     .from('credit_packages')
-    .select('*')
+    .select('id,name,credits,price_cents,active')
     .eq('active', true)
     .order('credits', { ascending: true })
 
