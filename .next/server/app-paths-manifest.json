@@ -1,22 +1,5 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/api/auth/callback/route": "app/api/auth/callback/route.js",
-  "/api/auth/signout/route": "app/api/auth/signout/route.js",
-  "/api/reports/route": "app/api/reports/route.js",
-  "/api/credits/transactions/route": "app/api/credits/transactions/route.js",
-  "/api/reports/[id]/route": "app/api/reports/[id]/route.js",
-  "/api/credits/purchase/route": "app/api/credits/purchase/route.js",
-  "/api/stripe/webhook/route": "app/api/stripe/webhook/route.js",
-  "/api/debug/stripe/route": "app/api/debug/stripe/route.js",
   "/dashboard/credits/page": "app/dashboard/credits/page.js",
-  "/api/valuation/generate-report/route": "app/api/valuation/generate-report/route.js",
-  "/dashboard/valuation/page": "app/dashboard/valuation/page.js",
-  "/dashboard/reports/page": "app/dashboard/reports/page.js",
-  "/dashboard/page": "app/dashboard/page.js",
-  "/api/valuation/route": "app/api/valuation/route.js",
-  "/dashboard/settings/page": "app/dashboard/settings/page.js",
-  "/login/page": "app/login/page.js",
-  "/signup/page": "app/signup/page.js",
-  "/page": "app/page.js",
-  "/api/credits/packages/route": "app/api/credits/packages/route.js"
+  "/login/page": "app/login/page.js"
 }

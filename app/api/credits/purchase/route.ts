@@ -151,7 +151,7 @@ export async function POST(request: Request) {
             currency: 'usd',
             product_data: {
               name: `${creditPackage.name} - ${creditPackage.credits} Credits`,
-              description: `${creditPackage.credits} credits for property valuations (5 credits per valuation)`,
+              description: `${creditPackage.credits} credits for property valuations`,
             },
             unit_amount: creditPackage.price_cents,
           },
@@ -159,8 +159,10 @@ export async function POST(request: Request) {
         },
       ],
       mode: 'payment',
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/credits?success=true`,
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/credits?success=true&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/credits?canceled=true`,
+      allow_promotion_codes: true,
+      billing_address_collection: 'auto',
       metadata: {
         user_id: user.id,
         type: 'credits',
