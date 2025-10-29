@@ -100,33 +100,36 @@ export async function POST(request: Request) {
     let customerId = existingUser?.stripe_customer_id
     console.log('Stored Stripe customer ID:', customerId)
 
-    // Always create a new customer in test mode to avoid live/test mode conflicts
-    console.log('Creating new Stripe customer in test mode...')
-    try {
-      const customer = await stripe.customers.create({
-        email: user.email,
-        metadata: {
-          supabase_user_id: user.id,
-        },
-      })
-      customerId = customer.id
-      console.log('Stripe customer created:', customerId)
+    if (!customerId) {
+      console.log('Creating new Stripe customer...')
+      try {
+        const customer = await stripe.customers.create({
+          email: user.email,
+          metadata: {
+            supabase_user_id: user.id,
+          },
+        })
+        customerId = customer.id
+        console.log('Stripe customer created:', customerId)
 
-      // Update user with new Stripe customer ID
-      const { error: updateError } = await supabase
-        .from('users')
-        .update({ stripe_customer_id: customerId })
-        .eq('id', user.id)
+        // Update user with new Stripe customer ID
+        const { error: updateError } = await supabase
+          .from('users')
+          .update({ stripe_customer_id: customerId })
+          .eq('id', user.id)
 
-      if (updateError) {
-        console.error('Error updating user with Stripe customer ID:', updateError)
-        // Continue anyway, we have the customer ID
-      } else {
-        console.log('User updated with new Stripe customer ID')
+        if (updateError) {
+          console.error('Error updating user with Stripe customer ID:', updateError)
+          // Continue anyway, we have the customer ID
+        } else {
+          console.log('User updated with new Stripe customer ID')
+        }
+      } catch (stripeError) {
+        console.error('Error creating Stripe customer:', stripeError)
+        return NextResponse.json({ error: 'Failed to create customer' }, { status: 500 })
       }
-    } catch (stripeError) {
-      console.error('Error creating Stripe customer:', stripeError)
-      return NextResponse.json({ error: 'Failed to create customer' }, { status: 500 })
+    } else {
+      console.log('Using existing Stripe customer:', customerId)
     }
 
     // Create checkout session for credit purchase
@@ -179,12 +182,24 @@ export async function POST(request: Request) {
         name: error.name,
         stack: error.stack
       })
+      
+      // Check for specific Stripe error types
+      if (error.message.includes('No such customer')) {
+        console.error('Stripe customer not found - this might be a test/live mode mismatch')
+      }
+      if (error.message.includes('Invalid API Key')) {
+        console.error('Invalid Stripe API key - check environment variables')
+      }
+      if (error.message.includes('testmode')) {
+        console.error('Test/Live mode mismatch detected')
+      }
     }
     
     return NextResponse.json(
       { 
         error: 'Failed to create checkout session',
-        details: error instanceof Error ? error.message : 'Unknown error'
+        details: error instanceof Error ? error.message : 'Unknown error',
+        timestamp: new Date().toISOString()
       },
       { status: 500 }
     )
