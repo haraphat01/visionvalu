@@ -74,8 +74,8 @@ export default function CreditsSection() {
       const data = await response.json()
 
       if (response.ok) {
-        // Redirect to Stripe Checkout using the session ID
-        window.location.href = `https://checkout.stripe.com/c/pay/${data.sessionId}`
+        // Redirect to Stripe Checkout using the provided URL
+        window.location.href = data.url || `https://checkout.stripe.com/c/pay/${data.sessionId}`
       } else {
         setMessage({ type: 'error', text: data.error || 'Failed to initiate payment. Please try again.' })
       }

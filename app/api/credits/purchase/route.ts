@@ -173,7 +173,10 @@ export async function POST(request: Request) {
 
     console.log('Stripe checkout session created successfully:', session.id)
 
-    return NextResponse.json({ sessionId: session.id })
+    return NextResponse.json({ 
+      sessionId: session.id,
+      url: session.url 
+    })
   } catch (error) {
     console.error('Error creating credit purchase session:', error)
     
