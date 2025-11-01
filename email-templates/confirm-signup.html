@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Your HomeWorth Account</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f8fafc; line-height: 1.6;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f8fafc; padding: 40px 20px;">
+        <tr>
+            <td align="center">
+                <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 16px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); max-width: 600px; width: 100%;">
+                    
+                    <!-- Header with Gradient -->
+                    <tr>
+                        <td style="background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); border-radius: 16px 16px 0 0; padding: 40px 30px; text-align: center;">
+                            <div style="width: 64px; height: 64px; background-color: rgba(255, 255, 255, 0.2); border-radius: 12px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
+                                <span style="font-size: 32px; color: #ffffff; font-weight: bold;">🏠</span>
+                            </div>
+                            <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: bold; letter-spacing: -0.5px;">HomeWorth</h1>
+                        </td>
+                    </tr>
+                    
+                    <!-- Main Content -->
+                    <tr>
+                        <td style="padding: 40px 30px;">
+                            <h2 style="margin: 0 0 16px 0; color: #1e293b; font-size: 24px; font-weight: bold; text-align: center;">Confirm Your Account</h2>
+                            <p style="margin: 0 0 24px 0; color: #64748b; font-size: 16px; text-align: center; line-height: 1.6;">
+                                Welcome to HomeWorth! We're excited to have you on board. 
+                                Please confirm your email address to activate your account and start valuing properties with AI-powered accuracy.
+                            </p>
+                            
+                            <!-- CTA Button -->
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td align="center" style="padding: 32px 0;">
+                                        <a href="{{ .ConfirmationURL }}" style="display: inline-block; padding: 16px 48px; background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); color: #ffffff; text-decoration: none; border-radius: 12px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4); transition: all 0.3s ease;">
+                                            Confirm Email Address
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                            <!-- Alternative Link -->
+                            <p style="margin: 24px 0 0 0; color: #94a3b8; font-size: 14px; text-align: center; line-height: 1.5;">
+                                If the button doesn't work, copy and paste this link into your browser:
+                            </p>
+                            <p style="margin: 8px 0 0 0; color: #3b82f6; font-size: 12px; text-align: center; word-break: break-all; line-height: 1.5;">
+                                {{ .ConfirmationURL }}
+                            </p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Features Section -->
+                    <tr>
+                        <td style="padding: 0 30px 40px 30px;">
+                            <div style="background-color: #f1f5f9; border-radius: 12px; padding: 24px; margin-top: 32px;">
+                                <p style="margin: 0 0 16px 0; color: #1e293b; font-size: 16px; font-weight: 600; text-align: center;">
+                                    What you'll get:
+                                </p>
+                                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                                    <tr>
+                                        <td style="padding: 8px 0;">
+                                            <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">
+                                                ✓ <strong>5 Free Credits</strong> to get started
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px 0;">
+                                            <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">
+                                                ✓ <strong>AI-Powered Valuations</strong> in under 30 seconds
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px 0;">
+                                            <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">
+                                                ✓ <strong>Professional Reports</strong> with detailed market analysis
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px 0;">
+                                            <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">
+                                                ✓ <strong>95% Accuracy</strong> compared to traditional appraisals
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Footer -->
+                    <tr>
+                        <td style="padding: 32px 30px; background-color: #f8fafc; border-radius: 0 0 16px 16px; border-top: 1px solid #e2e8f0;">
+                            <p style="margin: 0 0 8px 0; color: #64748b; font-size: 12px; text-align: center; line-height: 1.5;">
+                                This confirmation link will expire in 24 hours for security reasons.
+                            </p>
+                            <p style="margin: 16px 0 0 0; color: #94a3b8; font-size: 12px; text-align: center; line-height: 1.5;">
+                                If you didn't create an account with HomeWorth, you can safely ignore this email.
+                            </p>
+                            <p style="margin: 24px 0 0 0; color: #cbd5e1; font-size: 11px; text-align: center; line-height: 1.5;">
+                                © 2024 HomeWorth. All rights reserved.
+                            </p>
+                        </td>
+                    </tr>
+                    
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+

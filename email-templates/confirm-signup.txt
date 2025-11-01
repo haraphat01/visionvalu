@@ -1,0 +1,23 @@
+Welcome to HomeWorth!
+
+Confirm Your Account
+===================
+
+We're excited to have you on board. Please confirm your email address to activate your account and start valuing properties with AI-powered accuracy.
+
+Confirm your email address by clicking the link below:
+{{ .ConfirmationURL }}
+
+What you'll get:
+✓ 5 Free Credits to get started
+✓ AI-Powered Valuations in under 30 seconds
+✓ Professional Reports with detailed market analysis
+✓ 95% Accuracy compared to traditional appraisals
+
+This confirmation link will expire in 24 hours for security reasons.
+
+If you didn't create an account with HomeWorth, you can safely ignore this email.
+
+---
+© 2024 HomeWorth. All rights reserved.
+

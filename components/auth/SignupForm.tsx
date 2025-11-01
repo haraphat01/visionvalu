@@ -3,7 +3,6 @@
 import React, { useState } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useRouter } from 'next/navigation'
-import GoogleSignInButton from './GoogleSignInButton'
 
 export default function SignupForm() {
   const [email, setEmail] = useState('')
@@ -131,33 +130,20 @@ export default function SignupForm() {
               </div>
             )}
 
-            <div className="space-y-4">
-              <button
-                type="submit"
-                disabled={loading}
-                className="btn-primary w-full py-3 text-base font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {loading ? (
-                  <div className="flex items-center justify-center">
-                    <div className="spinner w-5 h-5 mr-2"></div>
-                    Creating account...
-                  </div>
-                ) : (
-                  'Create account'
-                )}
-              </button>
-              
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-300" />
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn-primary w-full py-3 text-base font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? (
+                <div className="flex items-center justify-center">
+                  <div className="spinner w-5 h-5 mr-2"></div>
+                  Creating account...
                 </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-4 bg-white text-gray-500 font-medium">Or continue with</span>
-                </div>
-              </div>
-              
-              <GoogleSignInButton text="Sign up with Google" />
-            </div>
+              ) : (
+                'Create account'
+              )}
+            </button>
 
             <div className="text-center">
               <p className="text-sm text-gray-600">
