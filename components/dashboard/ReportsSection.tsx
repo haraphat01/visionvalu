@@ -49,71 +49,97 @@ export default function ReportsSection() {
     setSelectedReport(report)
   }
 
-  const handleDownloadReport = (report: ValuationResult) => {
-    const reportData = {
-      property: report.propertyDetails,
-      valuation: {
-        estimatedValueRange: report.estimatedValueRange,
-        confidenceScore: report.confidenceScore,
-        currency: report.currency,
-        reasoning: report.reasoning,
-        detectedFeatures: report.detectedFeatures,
-        propertyType: report.propertyType,
-        propertyCondition: report.propertyCondition,
-        suggestedUpgrades: report.suggestedUpgrades,
-      },
-      timestamp: report.timestamp,
-    }
+  const handleDownloadReport = async (report: ValuationResult) => {
+    try {
+      // Fetch the HTML version of the report
+      const response = await fetch(`/api/reports/${report.id}/pdf`)
+      
+      if (!response.ok) {
+        throw new Error('Failed to generate PDF')
+      }
 
-    const blob = new Blob([JSON.stringify(reportData, null, 2)], {
-      type: 'application/json',
-    })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `property-valuation-${report.id}.json`
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-    URL.revokeObjectURL(url)
+      const html = await response.text()
+      
+      // Convert HTML to PDF using jsPDF and html2canvas
+      const { jsPDF } = await import('jspdf')
+      const { default: html2canvas } = await import('html2canvas')
+      
+      // Create a temporary container with the HTML
+      const tempDiv = document.createElement('div')
+      tempDiv.innerHTML = html
+      tempDiv.style.position = 'absolute'
+      tempDiv.style.left = '-9999px'
+      tempDiv.style.width = '800px'
+      document.body.appendChild(tempDiv)
+
+      // Convert to canvas then to PDF
+      const canvas = await html2canvas(tempDiv, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+      })
+      
+      document.body.removeChild(tempDiv)
+
+      const imgData = canvas.toDataURL('image/png')
+      const pdf = new jsPDF('p', 'mm', 'a4')
+      
+      const imgWidth = 210 // A4 width in mm
+      const pageHeight = 297 // A4 height in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width
+      let heightLeft = imgHeight
+      let position = 0
+
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
+      heightLeft -= pageHeight
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight
+        pdf.addPage()
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
+        heightLeft -= pageHeight
+      }
+
+      pdf.save(`property-valuation-${report.id}.pdf`)
+    } catch (error) {
+      console.error('Error downloading PDF:', error)
+      alert('Failed to download PDF. Please try again.')
+    }
   }
 
   const handleShareReport = async (report: ValuationResult) => {
-    const shareData = {
-      title: `Property Valuation Report - ${report.propertyDetails?.address || report.property_address || 'Property'}`,
-      text: `Property Valuation Report\n\n` +
-            `Property: ${report.propertyDetails?.address || report.property_address || 'Not specified'}\n` +
-            `Type: ${report.propertyType || report.property_type || 'Not specified'}\n` +
-            `Condition: ${report.propertyCondition || report.property_condition || 'Not specified'}\n` +
-            `Estimated Value: ${(report.estimatedValueRange || (report.estimated_value_min && report.estimated_value_max)) ? 
-              (report.estimatedValueRange 
-                ? `$${report.estimatedValueRange.min.toLocaleString()} - $${report.estimatedValueRange.max.toLocaleString()}`
-                : `$${report.estimated_value_min?.toLocaleString() || '0'} - $${report.estimated_value_max?.toLocaleString() || '0'}`) : 
-              'Not available'}\n` +
-            `Confidence: ${report.confidenceScore || report.confidence_score || 0}%\n` +
-            `Date: ${(report.timestamp || report.created_at) ? new Date(report.timestamp || report.created_at || '').toLocaleDateString() : 'Not available'}\n\n` +
-            `Analysis: ${report.reasoning || report.detailed_report || 'No analysis available'}`,
-      url: window.location.origin + `/dashboard/reports?report=${report.id}`
-    }
-
     try {
-      if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
-        await navigator.share(shareData)
-      } else {
-        // Fallback: copy to clipboard
-        await navigator.clipboard.writeText(shareData.text + '\n\n' + shareData.url)
-        alert('Report details copied to clipboard!')
+      // Generate shareable link
+      const response = await fetch(`/api/reports/${report.id}/share`, {
+        method: 'POST',
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to generate share link')
       }
+
+      const { shareUrl } = await response.json()
+
+      // Try to use Web Share API first
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: `Property Valuation Report - ${report.propertyDetails?.address || report.property_address || 'Property'}`,
+            text: `Check out this property valuation report from HomeWorth!`,
+            url: shareUrl,
+          })
+          return
+        } catch (shareError) {
+          // User cancelled or error, fall through to clipboard
+        }
+      }
+
+      // Fallback: copy shareable link to clipboard
+      await navigator.clipboard.writeText(shareUrl)
+      alert('Shareable link copied to clipboard!')
     } catch (error) {
       console.error('Error sharing report:', error)
-      // Fallback: copy to clipboard
-      try {
-        await navigator.clipboard.writeText(shareData.text + '\n\n' + shareData.url)
-        alert('Report details copied to clipboard!')
-      } catch (clipboardError) {
-        console.error('Error copying to clipboard:', clipboardError)
-        alert('Unable to share report. Please try downloading instead.')
-      }
+      alert('Unable to generate share link. Please try again.')
     }
   }
 

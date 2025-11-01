@@ -1,0 +1,118 @@
+'use client'
+
+import React from 'react'
+import type { ValuationResult } from '@/types'
+
+interface ReportShareViewProps {
+  report: any
+}
+
+export default function ReportShareView({ report }: ReportShareViewProps) {
+  const reportData = report.report_data
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white rounded-2xl shadow-xl p-8 lg:p-12">
+          <div className="text-center mb-8">
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center">
+                <span className="text-white font-bold text-2xl">🏠</span>
+              </div>
+            </div>
+            <h1 className="text-3xl font-bold text-slate-900 mb-2">Property Valuation Report</h1>
+            <p className="text-slate-600">Shared from HomeWorth</p>
+          </div>
+
+          <div className="space-y-6">
+            {/* Property Details */}
+            <div>
+              <h2 className="text-xl font-semibold text-slate-900 mb-4">Property Details</h2>
+              <div className="bg-slate-50 rounded-lg p-6 space-y-3">
+                <p>
+                  <span className="font-semibold text-slate-700">Address: </span>
+                  <span className="text-slate-600">
+                    {reportData.propertyDetails?.address || reportData.property_address || 'Not specified'}
+                  </span>
+                </p>
+                <div className="grid grid-cols-2 gap-4">
+                  <p>
+                    <span className="font-semibold text-slate-700">Type: </span>
+                    <span className="text-slate-600">{reportData.propertyType || reportData.property_type || 'Not specified'}</span>
+                  </p>
+                  <p>
+                    <span className="font-semibold text-slate-700">Condition: </span>
+                    <span className="text-slate-600">{reportData.propertyCondition || reportData.property_condition || 'Not specified'}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Valuation */}
+            <div>
+              <h2 className="text-xl font-semibold text-slate-900 mb-4">Valuation</h2>
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6 border border-blue-200">
+                <p className="text-sm font-medium text-slate-600 mb-2">Estimated Value Range</p>
+                {(reportData.estimatedValueRange || (reportData.estimated_value_min && reportData.estimated_value_max)) ? (
+                  <p className="text-4xl font-bold text-blue-600">
+                    {reportData.estimatedValueRange 
+                      ? `$${reportData.estimatedValueRange.min.toLocaleString()} - $${reportData.estimatedValueRange.max.toLocaleString()}`
+                      : `$${reportData.estimated_value_min?.toLocaleString() || '0'} - $${reportData.estimated_value_max?.toLocaleString() || '0'}`
+                    }
+                  </p>
+                ) : (
+                  <p className="text-2xl font-bold text-slate-500">Value not available</p>
+                )}
+                <p className="text-sm text-slate-600 mt-2">
+                  Confidence: {(reportData.confidenceScore || reportData.confidence_score || 0)}%
+                </p>
+              </div>
+            </div>
+
+            {/* Detailed Report */}
+            {reportData.detailed_report && (
+              <div>
+                <h2 className="text-xl font-semibold text-slate-900 mb-4">Detailed Analysis</h2>
+                <div 
+                  className="prose max-w-none text-slate-700"
+                  dangerouslySetInnerHTML={{ 
+                    __html: reportData.detailed_report
+                      .replace(/\n\n/g, '</p><p>')
+                      .replace(/\n/g, '<br>')
+                      .replace(/## (.*?)(<br>|$)/g, '<h3 class="font-semibold text-slate-900 mt-6 mb-3 text-lg">$1</h3>')
+                      .replace(/### (.*?)(<br>|$)/g, '<h4 class="font-medium text-slate-800 mt-4 mb-2">$1</h4>')
+                      .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>')
+                      .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
+                      .replace(/- (.*?)(<br>|$)/g, '<li class="ml-4 mb-1">$1</li>')
+                  }}
+                />
+              </div>
+            )}
+
+            {/* Reasoning */}
+            {reportData.reasoning && (
+              <div>
+                <h2 className="text-xl font-semibold text-slate-900 mb-4">AI Analysis</h2>
+                <p className="text-slate-700 leading-relaxed">{reportData.reasoning}</p>
+              </div>
+            )}
+
+            {/* Footer */}
+            <div className="mt-8 pt-8 border-t border-slate-200 text-center">
+              <p className="text-sm text-slate-500">
+                Generated by HomeWorth AI • {new Date(report.created_at).toLocaleDateString()}
+              </p>
+              <a 
+                href="/signup" 
+                className="inline-block mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Create Your Own Report
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
