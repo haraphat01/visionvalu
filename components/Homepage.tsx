@@ -2,6 +2,7 @@
 import React from 'react';
 import HomepageHeader from './homepage/HomepageHeader';
 import HeroSection from './homepage/HeroSection';
+import BuyerSellerSection from './homepage/BuyerSellerSection';
 import FeaturesOverview from './homepage/FeaturesOverview';
 import DemoUploadSection from './homepage/DemoUploadSection';
 import PricingSection from './homepage/PricingSection';
@@ -15,6 +16,7 @@ const Homepage: React.FC = () => {
     <div className="min-h-screen bg-white">
       <HomepageHeader />
       <HeroSection />
+      <BuyerSellerSection />
       <FeaturesOverview />
       <DemoUploadSection />
       <PricingSection />

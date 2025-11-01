@@ -22,27 +22,33 @@ const HeroSection: React.FC<HeroSectionProps> = () => {
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-slate-900 mb-6 leading-tight">
-              <span className="block">AI-Powered</span>
-              <span className="block gradient-text">HomeWorth</span>
-              <span className="block text-3xl sm:text-4xl lg:text-5xl font-normal text-slate-600 mt-2">Property Valuation</span>
+              <span className="block">Know Your Property's</span>
+              <span className="block gradient-text">True Worth</span>
+              <span className="block text-3xl sm:text-4xl lg:text-5xl font-normal text-slate-600 mt-2">In 30 Seconds</span>
             </h1>
             
             <p className="text-xl sm:text-2xl text-slate-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-              Get instant, accurate property valuations using advanced AI technology. 
-              Upload photos and receive detailed market analysis in minutes, not weeks.
+              <strong className="text-slate-900">Selling?</strong> Price it right to sell fast.{' '}
+              <strong className="text-slate-900">Buying?</strong> Avoid overpaying. Get instant, AI-powered 
+              property valuations with 95% accuracy—no appraiser needed.
             </p>
             
+            {/* Value Prop */}
+            <div className="mb-8 inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-green-100 to-emerald-100 rounded-full border border-green-300">
+              <span className="text-green-800 font-bold text-sm">🎁 Start with 5 FREE valuations - No credit card needed</span>
+            </div>
+
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
               <a 
                 href="/signup"
-                className="btn-primary text-lg px-8 py-4 hover-lift group relative overflow-hidden"
+                className="btn-primary text-lg px-10 py-5 hover-lift group relative overflow-hidden shadow-xl font-bold"
               >
                 <span className="relative z-10 flex items-center">
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
-                  Get Started
+                  Get Started Free
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </a>
@@ -53,16 +59,20 @@ const HeroSection: React.FC<HeroSectionProps> = () => {
                     pricingSection.scrollIntoView({ behavior: 'smooth' });
                   }
                 }}
-                className="btn-outline text-lg px-8 py-4 hover-lift"
+                className="btn-outline text-lg px-10 py-5 hover-lift font-semibold"
               >
                 <span className="flex items-center">
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                   </svg>
-                  View Pricing
+                  See Pricing
                 </span>
               </button>
             </div>
+            
+            <p className="text-sm text-slate-500 mb-12">
+              ✓ No credit card required • ✓ Instant access • ✓ Cancel anytime
+            </p>
 
             {/* Trust Indicators */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 text-sm text-slate-600 mb-16">

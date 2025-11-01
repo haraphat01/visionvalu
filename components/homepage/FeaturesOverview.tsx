@@ -3,40 +3,40 @@ import React from 'react';
 const FeaturesOverview: React.FC = () => {
   const features = [
     {
-      icon: '🤖',
-      title: 'Advanced AI Technology',
-      description: 'Powered by cutting-edge machine learning algorithms trained on millions of property transactions.',
-      benefits: ['Market trend analysis', 'Property condition assessment', 'Location-based insights']
-    },
-    {
       icon: '⚡',
-      title: 'Instant Results',
-      description: 'Get professional property valuations in seconds, not weeks. No waiting for appraisers.',
-      benefits: ['30-second analysis', 'Real-time market data', 'Immediate reports']
+      title: 'Get Results in 30 Seconds',
+      description: 'Stop waiting weeks for appraisers. Upload photos and get professional valuations instantly—perfect for time-sensitive decisions.',
+      benefits: ['Instant analysis', 'No scheduling delays', 'Available 24/7']
     },
     {
-      icon: '📊',
-      title: 'Comprehensive Reports',
-      description: 'Detailed valuation reports with market comparisons, trend analysis, and confidence scores.',
-      benefits: ['Market comparisons', 'Historical trends', 'Confidence indicators']
+      icon: '💵',
+      title: 'Save Thousands of Dollars',
+      description: 'Traditional appraisals cost $300-$600. Get the same accuracy for just $2 per valuation. Save up to 98% on valuation costs.',
+      benefits: ['$300 vs $2 per report', 'No hidden fees', 'Pay only what you use']
     },
     {
       icon: '🎯',
-      title: 'Professional Accuracy',
-      description: 'Our AI models achieve 95%+ accuracy compared to traditional appraisals.',
-      benefits: ['95%+ accuracy rate', 'Professional standards', 'Market validation']
+      title: '95% Professional Accuracy',
+      description: 'Our AI is trained on millions of real transactions. Get appraisal-grade accuracy without the wait or cost.',
+      benefits: ['Industry-leading accuracy', 'Validated by experts', 'Trusted by thousands']
+    },
+    {
+      icon: '📈',
+      title: 'Smart Market Insights',
+      description: 'Get detailed analysis of comparable sales, market trends, and property condition—everything you need to price or negotiate right.',
+      benefits: ['Comparable property data', 'Market trend analysis', 'Investment recommendations']
     },
     {
       icon: '🔒',
-      title: 'Secure & Private',
-      description: 'Your property data is encrypted and never shared. Complete privacy protection.',
+      title: '100% Private & Secure',
+      description: 'Your property data never leaves our secure servers. Complete privacy with bank-level encryption.',
       benefits: ['End-to-end encryption', 'No data sharing', 'GDPR compliant']
     },
     {
-      icon: '💰',
-      title: 'Cost Effective',
-      description: 'Save thousands compared to traditional appraisals. Professional results at a fraction of the cost.',
-      benefits: ['90% cost savings', 'No hidden fees', 'Transparent pricing']
+      icon: '📄',
+      title: 'Professional Reports',
+      description: 'Get shareable, professional-grade reports perfect for negotiations, listings, or investment analysis.',
+      benefits: ['PDF-ready format', 'Shareable links', 'Professional presentation']
     }
   ];
 
@@ -45,10 +45,10 @@ const FeaturesOverview: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-6">
-            Why Choose HomeWorth?
+            Everything You Need to <span className="gradient-text">Make Smart Decisions</span>
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            Our AI-powered platform revolutionizes property valuation with speed, accuracy, and affordability.
+            Professional-grade property valuations in seconds. Save time, money, and stress with AI-powered insights.
           </p>
         </div>
 

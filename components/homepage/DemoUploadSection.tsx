@@ -11,12 +11,14 @@ const DemoUploadSection: React.FC<DemoUploadSectionProps> = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-6">
-            Try Our AI Valuation Engine
+            Get Your Property's Value in <span className="gradient-text">3 Simple Steps</span>
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            Experience the power of AI-driven property valuation. Upload your property photos 
-            and see how our advanced algorithms analyze market data in real-time.
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-4">
+            No complicated forms. No waiting. Just upload photos and get instant, accurate valuations.
           </p>
+          <div className="inline-flex items-center px-4 py-2 bg-blue-50 border border-blue-200 rounded-full">
+            <span className="text-blue-700 font-semibold text-sm">⚡ Average time: 30 seconds • 🎯 95% accuracy</span>
+          </div>
         </div>
 
         <div className="max-w-4xl mx-auto">

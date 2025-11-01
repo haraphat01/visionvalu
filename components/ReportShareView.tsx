@@ -2,6 +2,7 @@
 
 import React from 'react'
 import type { ValuationResult } from '@/types'
+import { formatMarkdown } from '@/lib/markdownFormatter'
 
 interface ReportShareViewProps {
   report: any
@@ -71,19 +72,12 @@ export default function ReportShareView({ report }: ReportShareViewProps) {
 
             {/* Detailed Report */}
             {reportData.detailed_report && (
-              <div>
-                <h2 className="text-xl font-semibold text-slate-900 mb-4">Detailed Analysis</h2>
+              <div className="bg-white rounded-xl border border-slate-200 p-6">
+                <h2 className="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-200">Detailed Analysis</h2>
                 <div 
-                  className="prose max-w-none text-slate-700"
+                  className="prose prose-slate max-w-none text-slate-700 leading-relaxed"
                   dangerouslySetInnerHTML={{ 
-                    __html: reportData.detailed_report
-                      .replace(/\n\n/g, '</p><p>')
-                      .replace(/\n/g, '<br>')
-                      .replace(/## (.*?)(<br>|$)/g, '<h3 class="font-semibold text-slate-900 mt-6 mb-3 text-lg">$1</h3>')
-                      .replace(/### (.*?)(<br>|$)/g, '<h4 class="font-medium text-slate-800 mt-4 mb-2">$1</h4>')
-                      .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>')
-                      .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
-                      .replace(/- (.*?)(<br>|$)/g, '<li class="ml-4 mb-1">$1</li>')
+                    __html: formatMarkdown(reportData.detailed_report)
                   }}
                 />
               </div>

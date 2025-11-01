@@ -3,58 +3,58 @@ import React from 'react';
 const TestimonialsSection: React.FC = () => {
   const testimonials = [
     {
-      name: 'Sarah Johnson',
+      name: 'Sarah Martinez',
+      role: 'First-Time Home Buyer',
+      company: 'Used HomeWorth before buying',
+      image: '👩',
+      rating: 5,
+      text: 'I was about to overpay $45,000 for my first home. HomeWorth\'s valuation saved me from a huge mistake. The report was so detailed, I knew exactly what to offer.',
+      location: 'Denver, CO'
+    },
+    {
+      name: 'Robert Chen',
+      role: 'Home Seller',
+      company: 'Sold home in 12 days',
+      image: '👨',
+      rating: 5,
+      text: 'We priced our home perfectly thanks to HomeWorth. It sold for asking price in just 12 days—faster than any other home in our neighborhood! Worth every penny.',
+      location: 'Portland, OR'
+    },
+    {
+      name: 'Jennifer Adams',
       role: 'Real Estate Agent',
       company: 'Premier Properties',
       image: '👩‍💼',
       rating: 5,
-      text: 'HomeWorth has revolutionized how I present properties to clients. The AI analysis is incredibly accurate and saves me hours of research. My clients love the detailed reports!',
-      location: 'San Francisco, CA'
-    },
-    {
-      name: 'Michael Chen',
-      role: 'Property Developer',
-      company: 'Urban Development Co.',
-      image: '👨‍💼',
-      rating: 5,
-      text: 'As a developer, I need quick, accurate valuations for multiple properties. HomeWorth delivers professional-grade analysis in minutes. It\'s become an essential tool in my workflow.',
+      text: 'HomeWorth has transformed my business. I can now provide instant valuations to clients during showings. My clients trust the data, and I close deals faster.',
       location: 'Austin, TX'
     },
     {
-      name: 'Emily Rodriguez',
-      role: 'Real Estate Investor',
-      company: 'Rodriguez Investments',
-      image: '👩‍💻',
-      rating: 5,
-      text: 'The market trend analysis feature is incredible. I can make informed investment decisions quickly. The accuracy is impressive - it\'s saved me thousands in due diligence costs.',
-      location: 'Miami, FL'
-    },
-    {
-      name: 'David Thompson',
-      role: 'Property Manager',
-      company: 'Thompson Properties',
-      image: '👨‍🏢',
-      rating: 5,
-      text: 'Managing 200+ properties requires efficient valuation processes. HomeWorth\'s bulk upload feature and detailed reports have streamlined our operations significantly.',
-      location: 'Seattle, WA'
-    },
-    {
-      name: 'Lisa Wang',
-      role: 'Real Estate Broker',
-      company: 'Wang & Associates',
-      image: '👩‍💼',
-      rating: 5,
-      text: 'My clients are impressed with the professional reports. The AI analysis provides insights I never would have considered. It\'s elevated my service quality.',
-      location: 'New York, NY'
-    },
-    {
-      name: 'James Wilson',
-      role: 'Property Appraiser',
-      company: 'Wilson Appraisals',
+      name: 'Mike Thompson',
+      role: 'Property Investor',
+      company: 'Active Real Estate Investor',
       image: '👨‍💼',
       rating: 5,
-      text: 'As a traditional appraiser, I was skeptical of AI valuations. But HomeWorth\'s accuracy and detailed analysis have made it a valuable tool in my practice.',
-      location: 'Chicago, IL'
+      text: 'I evaluate 20+ properties monthly. HomeWorth saves me $6,000+ in appraisal costs every month while giving me instant insights. Game-changer for investors!',
+      location: 'Phoenix, AZ'
+    },
+    {
+      name: 'Lisa Park',
+      role: 'Home Seller',
+      company: 'Maximized sale price',
+      image: '👩',
+      rating: 5,
+      text: 'The upgrade recommendations feature was gold! We made $18K worth of improvements that added $35K to our sale price. Best investment we made.',
+      location: 'San Diego, CA'
+    },
+    {
+      name: 'David Kim',
+      role: 'Home Buyer',
+      company: 'Negotiated better deal',
+      image: '👨',
+      rating: 5,
+      text: 'Used HomeWorth during negotiations and saved $32,000 off the asking price. The seller\'s agent couldn\'t argue with the professional report. Highly recommend!',
+      location: 'Boston, MA'
     }
   ];
 
@@ -70,10 +70,10 @@ const TestimonialsSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-6">
-            What Our Customers Say
+            Real Stories from <span className="gradient-text">Real People</span>
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            Join thousands of real estate professionals who trust HomeWorth for accurate, fast property valuations.
+            See how buyers and sellers are saving thousands and making smarter decisions with HomeWorth.
           </p>
         </div>
 

@@ -8,12 +8,15 @@ const CTASection: React.FC<CTASectionProps> = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
-            Ready to Transform Your Property Valuation Process?
+            Stop Guessing. Start Knowing.
           </h2>
-          <p className="text-xl text-blue-100 mb-12 max-w-3xl mx-auto">
-            Join thousands of real estate professionals who are already using HomeWorth 
-            to get faster, more accurate property valuations. Get started today.
+          <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
+            Get your first 5 valuations <strong className="text-white">completely free</strong>. No credit card required. 
+            Start making smarter real estate decisions in minutes.
           </p>
+          <div className="mb-8 inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full">
+            <span className="text-white font-semibold">🎁 New users get 5 free credits ($10 value)</span>
+          </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <a 

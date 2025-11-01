@@ -40,11 +40,89 @@ const FeatureComparison: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-6">
-            Compare All Features
+            HomeWorth vs <span className="gradient-text">Traditional Appraisals</span>
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            See exactly what's included in each plan. Choose the one that best fits your needs.
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8">
+            See why thousands of buyers and sellers choose AI-powered valuations over expensive, slow appraisals.
           </p>
+          
+          {/* Quick Comparison */}
+          <div className="max-w-4xl mx-auto mb-12">
+            <div className="bg-white rounded-2xl shadow-lg p-8 border-2 border-slate-200">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="text-left">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                      <span className="text-2xl">❌</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900">Traditional Appraisals</h3>
+                  </div>
+                  <ul className="space-y-3 text-slate-600">
+                    <li className="flex items-start gap-2">
+                      <span className="text-red-500 mt-1">×</span>
+                      <span><strong>$300-$600</strong> per valuation</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-red-500 mt-1">×</span>
+                      <span><strong>2-4 weeks</strong> waiting time</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-red-500 mt-1">×</span>
+                      <span>Requires scheduling appointments</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-red-500 mt-1">×</span>
+                      <span>Limited availability (business hours)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-red-500 mt-1">×</span>
+                      <span>No instant access to reports</span>
+                    </li>
+                  </ul>
+                </div>
+                
+                <div className="text-left">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                      <span className="text-2xl">✓</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900">HomeWorth AI</h3>
+                  </div>
+                  <ul className="space-y-3 text-slate-600">
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500 mt-1">✓</span>
+                      <span><strong>$2</strong> per valuation (5 credits)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500 mt-1">✓</span>
+                      <span><strong>30 seconds</strong> instant results</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500 mt-1">✓</span>
+                      <span>Available 24/7, no scheduling needed</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500 mt-1">✓</span>
+                      <span>Instant access anywhere, anytime</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500 mt-1">✓</span>
+                      <span>Shareable reports in seconds</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div className="mt-8 pt-8 border-t border-slate-200">
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 border-2 border-green-300">
+                  <p className="text-lg font-bold text-slate-900 mb-2">💰 Save up to <span className="text-green-600">98%</span> on valuation costs</p>
+                  <p className="text-slate-600">Get the same professional accuracy in 30 seconds instead of 2-4 weeks.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <h3 className="text-2xl font-bold text-slate-900 mb-6">Credit Package Comparison</h3>
         </div>
 
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
