@@ -52,17 +52,19 @@ const FeaturesOverview: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {features.map((feature, index) => (
-            <div key={index} className="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow duration-200">
-              <div className="text-4xl mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-bold text-slate-900 mb-4">{feature.title}</h3>
-              <p className="text-slate-600 mb-6">{feature.description}</p>
-              <ul className="space-y-2">
+            <div key={index} className="bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-slate-100 hover:shadow-xl hover:border-blue-200 transition-all duration-300 hover:-translate-y-1 group">
+              <div className="text-5xl mb-6 transform group-hover:scale-110 transition-transform duration-300">{feature.icon}</div>
+              <h3 className="text-xl font-bold text-slate-900 mb-4 group-hover:text-blue-600 transition-colors duration-200">{feature.title}</h3>
+              <p className="text-slate-600 mb-6 leading-relaxed">{feature.description}</p>
+              <ul className="space-y-3">
                 {feature.benefits.map((benefit, benefitIndex) => (
-                  <li key={benefitIndex} className="flex items-center text-sm text-slate-600">
-                    <span className="text-green-500 mr-2">✓</span>
-                    {benefit}
+                  <li key={benefitIndex} className="flex items-center text-sm text-slate-700">
+                    <span className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                      <span className="text-green-600 text-xs font-bold">✓</span>
+                    </span>
+                    <span>{benefit}</span>
                   </li>
                 ))}
               </ul>
@@ -71,32 +73,32 @@ const FeaturesOverview: React.FC = () => {
         </div>
 
         {/* Stats Section */}
-        <div className="mt-20 bg-white rounded-2xl p-8 lg:p-12 shadow-sm">
+        <div className="mt-20 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-2xl p-8 lg:p-12 shadow-lg border border-blue-100">
           <div className="text-center mb-12">
             <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-4">
               Trusted by Thousands
             </h3>
-            <p className="text-slate-600">
+            <p className="text-slate-600 text-lg">
               Join the growing community of professionals using HomeWorth
             </p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-4xl font-bold text-blue-600 mb-2">50K+</div>
-              <div className="text-slate-600">Properties Valued</div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            <div className="text-center bg-white/60 backdrop-blur-sm rounded-xl p-6 hover:bg-white/80 transition-all duration-200 hover:scale-105">
+              <div className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-2">50K+</div>
+              <div className="text-slate-600 font-medium">Properties Valued</div>
             </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-blue-600 mb-2">95%</div>
-              <div className="text-slate-600">Accuracy Rate</div>
+            <div className="text-center bg-white/60 backdrop-blur-sm rounded-xl p-6 hover:bg-white/80 transition-all duration-200 hover:scale-105">
+              <div className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-2">95%</div>
+              <div className="text-slate-600 font-medium">Accuracy Rate</div>
             </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-blue-600 mb-2">30s</div>
-              <div className="text-slate-600">Average Analysis Time</div>
+            <div className="text-center bg-white/60 backdrop-blur-sm rounded-xl p-6 hover:bg-white/80 transition-all duration-200 hover:scale-105">
+              <div className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">30s</div>
+              <div className="text-slate-600 font-medium">Average Analysis Time</div>
             </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-blue-600 mb-2">$2M+</div>
-              <div className="text-slate-600">Saved in Appraisal Costs</div>
+            <div className="text-center bg-white/60 backdrop-blur-sm rounded-xl p-6 hover:bg-white/80 transition-all duration-200 hover:scale-105">
+              <div className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent mb-2">$2M+</div>
+              <div className="text-slate-600 font-medium">Saved in Appraisal Costs</div>
             </div>
           </div>
         </div>

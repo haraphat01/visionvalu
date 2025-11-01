@@ -1,4 +1,4 @@
-// File: /Users/macbook/Desktop/Projects/visionvalu_-ai-property-valuation/app/api/credits/packages/route.ts
+// File: /Users/macbook/Desktop/Projects/visionvalu/app/api/credits/packages/route.ts
 import * as entry from '../../../../../../app/api/credits/packages/route.js'
 import type { NextRequest } from 'next/server.js'
 

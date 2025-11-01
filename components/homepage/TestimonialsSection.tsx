@@ -89,27 +89,27 @@ const TestimonialsSection: React.FC = () => {
         </div>
 
         {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-16">
           {testimonials.map((testimonial, index) => (
-            <div key={index} className="bg-slate-50 rounded-xl p-6 hover:shadow-md transition-shadow duration-200">
+            <div key={index} className="bg-white rounded-2xl p-6 lg:p-8 shadow-md border border-slate-100 hover:shadow-xl hover:border-blue-200 transition-all duration-300 hover:-translate-y-1">
               <div className="flex items-center mb-4">
-                <div className="text-3xl mr-3">{testimonial.image}</div>
+                <div className="text-4xl mr-4">{testimonial.image}</div>
                 <div>
-                  <div className="font-semibold text-slate-900">{testimonial.name}</div>
-                  <div className="text-sm text-slate-600">{testimonial.role}</div>
+                  <div className="font-bold text-slate-900">{testimonial.name}</div>
+                  <div className="text-sm text-slate-600 font-medium">{testimonial.role}</div>
                   <div className="text-sm text-slate-500">{testimonial.company}</div>
                 </div>
               </div>
               
-              <div className="flex mb-3">
+              <div className="flex mb-4">
                 {[...Array(testimonial.rating)].map((_, i) => (
-                  <span key={i} className="text-yellow-400">⭐</span>
+                  <span key={i} className="text-yellow-400 text-lg">⭐</span>
                 ))}
               </div>
               
-              <p className="text-slate-700 mb-4 italic">"{testimonial.text}"</p>
+              <p className="text-slate-700 mb-4 italic leading-relaxed">"{testimonial.text}"</p>
               
-              <div className="text-sm text-slate-500">{testimonial.location}</div>
+              <div className="text-sm text-slate-500 font-medium">📍 {testimonial.location}</div>
             </div>
           ))}
         </div>
@@ -150,9 +150,9 @@ const TestimonialsSection: React.FC = () => {
             Join thousands of satisfied customers and start getting accurate valuations today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-lg text-lg transition-colors duration-200 shadow-lg hover:shadow-xl">
-              Start Free Trial
-            </button>
+            <a href="/signup" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-lg text-lg transition-colors duration-200 shadow-lg hover:shadow-xl text-center">
+              Get Started
+            </a>
             <button className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold py-4 px-8 rounded-lg text-lg transition-colors duration-200">
               View All Reviews
             </button>

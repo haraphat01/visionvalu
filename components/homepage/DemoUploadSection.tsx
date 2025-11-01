@@ -1,28 +1,10 @@
 'use client'
 
-import React, { useState } from 'react';
+import React from 'react';
 
-interface DemoUploadSectionProps {
-  onNavigateToApp?: () => void;
-}
+interface DemoUploadSectionProps {}
 
-const DemoUploadSection: React.FC<DemoUploadSectionProps> = ({ onNavigateToApp }) => {
-  const [isDemoActive, setIsDemoActive] = useState(false);
-
-  const handleDemoStart = () => {
-    if (onNavigateToApp) {
-      onNavigateToApp();
-    } else {
-      setIsDemoActive(true);
-      // Scroll to main app functionality
-      setTimeout(() => {
-        const mainApp = document.querySelector('[data-main-app]');
-        if (mainApp) {
-          mainApp.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 500);
-    }
-  };
+const DemoUploadSection: React.FC<DemoUploadSectionProps> = () => {
 
   return (
     <section className="py-20 bg-white">
@@ -38,70 +20,50 @@ const DemoUploadSection: React.FC<DemoUploadSectionProps> = ({ onNavigateToApp }
         </div>
 
         <div className="max-w-4xl mx-auto">
-          {!isDemoActive ? (
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-8 lg:p-12 text-center">
-              <div className="mb-8">
-                <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <span className="text-3xl text-white">📸</span>
-                </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-4">
-                  Upload & Analyze in 3 Simple Steps
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                  <div className="bg-white rounded-lg p-6 shadow-sm">
-                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-blue-600 font-bold">1</span>
-                    </div>
-                    <h4 className="font-semibold text-slate-900 mb-2">Upload Photos</h4>
-                    <p className="text-sm text-slate-600">Add 3-5 clear property images</p>
-                  </div>
-                  <div className="bg-white rounded-lg p-6 shadow-sm">
-                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-blue-600 font-bold">2</span>
-                    </div>
-                    <h4 className="font-semibold text-slate-900 mb-2">AI Analysis</h4>
-                    <p className="text-sm text-slate-600">Our AI analyzes your property</p>
-                  </div>
-                  <div className="bg-white rounded-lg p-6 shadow-sm">
-                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-blue-600 font-bold">3</span>
-                    </div>
-                    <h4 className="font-semibold text-slate-900 mb-2">Get Results</h4>
-                    <p className="text-sm text-slate-600">Receive detailed valuation report</p>
-                  </div>
-                </div>
+          <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-2xl p-8 lg:p-12 text-center border border-blue-100 shadow-lg">
+            <div className="mb-8">
+              <div className="w-20 h-20 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <span className="text-3xl text-white">📸</span>
               </div>
-              
-              <button 
-                onClick={handleDemoStart}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-lg text-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
-              >
-                Start Free Demo
-              </button>
-              
-              <p className="text-sm text-slate-500 mt-4">
-                No registration required • Instant results • Professional accuracy
-              </p>
-            </div>
-          ) : (
-            <div className="bg-green-50 border border-green-200 rounded-2xl p-8 text-center">
-              <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl text-white">✓</span>
-              </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-4">
-                Demo Started!
+              <h3 className="text-2xl lg:text-3xl font-bold text-slate-900 mb-4">
+                Upload & Analyze in 3 Simple Steps
               </h3>
-              <p className="text-slate-600 mb-6">
-                Scroll down to upload your property photos and see our AI in action.
-              </p>
-              <button 
-                onClick={() => setIsDemoActive(false)}
-                className="text-blue-600 hover:text-blue-700 font-medium"
-              >
-                ← Back to Demo Info
-              </button>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-200 hover:-translate-y-1 border border-slate-100">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
+                    <span className="text-white font-bold">1</span>
+                  </div>
+                  <h4 className="font-bold text-slate-900 mb-2">Upload Photos</h4>
+                  <p className="text-sm text-slate-600">Add 3-5 clear property images</p>
+                </div>
+                <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-200 hover:-translate-y-1 border border-slate-100">
+                  <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
+                    <span className="text-white font-bold">2</span>
+                  </div>
+                  <h4 className="font-bold text-slate-900 mb-2">AI Analysis</h4>
+                  <p className="text-sm text-slate-600">Our AI analyzes your property</p>
+                </div>
+                <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-200 hover:-translate-y-1 border border-slate-100">
+                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
+                    <span className="text-white font-bold">3</span>
+                  </div>
+                  <h4 className="font-bold text-slate-900 mb-2">Get Results</h4>
+                  <p className="text-sm text-slate-600">Receive detailed valuation report</p>
+                </div>
+              </div>
             </div>
-          )}
+            
+            <a 
+              href="/signup"
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-4 px-8 rounded-xl text-lg transition-all duration-200 shadow-lg hover:shadow-xl inline-block hover:scale-105"
+            >
+              Get Started
+            </a>
+            
+            <p className="text-sm text-slate-600 mt-4 font-medium">
+              Professional accuracy • Instant results • Detailed reports
+            </p>
+          </div>
         </div>
 
         {/* Demo Features */}

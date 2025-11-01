@@ -65,44 +65,46 @@ const PricingSection: React.FC = () => {
             {creditPackages.map((pkg, index) => (
               <div 
                 key={index} 
-                className={`relative bg-white rounded-2xl p-8 shadow-sm border-2 transition-all duration-200 hover:shadow-lg ${
+                className={`relative bg-white rounded-2xl p-6 lg:p-8 shadow-lg border-2 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 ${
                   pkg.popular 
-                    ? 'border-blue-500 shadow-lg' 
-                    : 'border-slate-200 hover:border-blue-300'
+                    ? 'border-blue-500 shadow-xl ring-4 ring-blue-100 scale-105' 
+                    : 'border-slate-200 hover:border-blue-400'
                 }`}
               >
                 {pkg.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                    <span className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-2 rounded-full text-sm font-bold shadow-lg">
                       Most Popular
                     </span>
                   </div>
                 )}
                 
                 <div className="text-center mb-6">
-                  <h4 className="text-xl font-bold text-slate-900 mb-2">{pkg.name}</h4>
-                  <div className="flex items-center justify-center gap-2 mb-4">
-                    <span className="text-4xl font-bold text-slate-900">${pkg.price}</span>
-                    <span className="text-slate-500 line-through">${pkg.originalPrice}</span>
+                  <h4 className="text-2xl font-bold text-slate-900 mb-3">{pkg.name}</h4>
+                  <div className="flex items-baseline justify-center gap-3 mb-4">
+                    <span className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">${pkg.price}</span>
+                    <span className="text-lg text-slate-400 line-through">${pkg.originalPrice}</span>
                   </div>
-                  <div className="text-slate-600 mb-2">{pkg.credits} Credits</div>
+                  <div className="text-lg font-semibold text-slate-700 mb-1">{pkg.credits} Credits</div>
                   <div className="text-sm text-slate-500">5 credits per valuation</div>
                 </div>
 
                 <ul className="space-y-3 mb-8">
                   {pkg.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-center text-slate-600">
-                      <span className="text-green-500 mr-3">✓</span>
-                      {feature}
+                    <li key={featureIndex} className="flex items-start text-slate-700">
+                      <span className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                        <span className="text-green-600 text-xs font-bold">✓</span>
+                      </span>
+                      <span className="text-sm">{feature}</span>
                     </li>
                   ))}
                 </ul>
 
                 <button 
-                  className={`w-full py-3 px-6 rounded-lg font-semibold transition-colors duration-200 ${
+                  className={`w-full py-3.5 px-6 rounded-xl font-bold transition-all duration-200 ${
                     pkg.popular
-                      ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                      : 'bg-slate-100 hover:bg-slate-200 text-slate-900'
+                      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl'
+                      : 'bg-slate-100 hover:bg-slate-200 text-slate-900 hover:shadow-md'
                   }`}
                 >
                   Choose Plan
@@ -115,10 +117,10 @@ const PricingSection: React.FC = () => {
 
         {/* Money Back Guarantee */}
         <div className="mt-16 text-center">
-          <div className="bg-green-50 border border-green-200 rounded-xl p-8 max-w-2xl mx-auto">
-            <div className="text-green-600 text-4xl mb-4">🛡️</div>
-            <h3 className="text-xl font-bold text-slate-900 mb-2">30-Day Money-Back Guarantee</h3>
-            <p className="text-slate-600">
+          <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl p-8 lg:p-10 max-w-2xl mx-auto shadow-lg hover:shadow-xl transition-shadow duration-200">
+            <div className="text-5xl mb-4">🛡️</div>
+            <h3 className="text-2xl font-bold text-slate-900 mb-3">30-Day Money-Back Guarantee</h3>
+            <p className="text-slate-600 text-lg">
               Not satisfied with your results? Get a full refund within 30 days, no questions asked.
             </p>
           </div>

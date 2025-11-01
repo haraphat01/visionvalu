@@ -1,4 +1,4 @@
-// File: /Users/macbook/Desktop/Projects/visionvalu_-ai-property-valuation/app/dashboard/credits/page.tsx
+// File: /Users/macbook/Desktop/Projects/visionvalu/app/dashboard/credits/page.tsx
 import * as entry from '../../../../../app/dashboard/credits/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
