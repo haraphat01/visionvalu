@@ -46,13 +46,33 @@ export default function CreditsSection() {
 
   const fetchCreditPackages = async () => {
     try {
-      const response = await fetch('/api/credits/packages', { cache: 'force-cache' })
-      if (response.ok) {
-        const data = await response.json()
-        setCreditPackages(data.packages || [])
+      const response = await fetch('/api/credits/packages', { 
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      })
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        console.error('Error fetching credit packages:', response.status, errorData)
+        setMessage({ type: 'error', text: errorData.error || 'Failed to load credit packages. Please refresh the page.' })
+        setCreditPackages([])
+        return
+      }
+      
+      const data = await response.json()
+      if (data.packages && Array.isArray(data.packages)) {
+        setCreditPackages(data.packages)
+      } else {
+        console.error('Invalid data format from API:', data)
+        setCreditPackages([])
+        setMessage({ type: 'error', text: 'Invalid data received. Please try again.' })
       }
     } catch (error) {
       console.error('Error fetching credit packages:', error)
+      setMessage({ type: 'error', text: 'Failed to load credit packages. Please check your connection and try again.' })
+      setCreditPackages([])
     } finally {
       setLoading(false)
     }
@@ -186,6 +206,22 @@ export default function CreditsSection() {
               <div className="text-center py-12">
                 <div className="spinner w-12 h-12 mx-auto mb-4"></div>
                 <p className="text-gray-600">Loading packages...</p>
+              </div>
+            ) : creditPackages.length === 0 ? (
+              <div className="text-center py-12">
+                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Coins className="h-8 w-8 text-gray-400" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">No Credit Packages Available</h3>
+                <p className="text-gray-500 mb-6">
+                  We're currently setting up credit packages. Please check back soon or contact support.
+                </p>
+                <button
+                  onClick={() => fetchCreditPackages()}
+                  className="btn-outline"
+                >
+                  Refresh
+                </button>
               </div>
             ) : (
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
