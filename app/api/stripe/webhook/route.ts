@@ -26,44 +26,174 @@ export async function POST(request: Request) {
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session
-        const userId = session.metadata?.user_id
+        
+        console.log('Processing checkout.session.completed:', {
+          sessionId: session.id,
+          customerId: session.customer,
+          metadata: session.metadata,
+          paymentStatus: session.payment_status
+        })
+
+        // Only process if payment is successful
+        if (session.payment_status !== 'paid') {
+          console.log('Payment not completed, skipping credit addition. Status:', session.payment_status)
+          break
+        }
+
+        let userId = session.metadata?.user_id
         const type = session.metadata?.type
+        const packageId = session.metadata?.package_id
+        let credits = parseInt(session.metadata?.credits || '0')
 
-        if (userId && type === 'credits') {
-          // Handle credit purchase
-          const packageId = session.metadata?.package_id
-          const credits = parseInt(session.metadata?.credits || '0')
+        // If metadata is missing, try to get from payment intent
+        if ((!userId || !credits) && session.payment_intent) {
+          console.log('Metadata missing from session, retrieving from payment intent:', session.payment_intent)
+          try {
+            const paymentIntent = await stripe.paymentIntents.retrieve(session.payment_intent as string)
+            console.log('Payment intent metadata:', paymentIntent.metadata)
+            userId = userId || paymentIntent.metadata?.user_id
+            credits = credits || parseInt(paymentIntent.metadata?.credits || '0')
+          } catch (error) {
+            console.error('Error retrieving payment intent:', error)
+          }
+        }
+
+        // Fallback: find user by customer ID if metadata is missing
+        let finalUserId = userId
+        if (!finalUserId && session.customer) {
+          console.log('User ID not in metadata, looking up by customer ID:', session.customer)
+          const { data: user } = await supabase
+            .from('users')
+            .select('id')
+            .eq('stripe_customer_id', session.customer as string)
+            .single()
           
-          if (credits > 0) {
-            // Get the payment intent ID for tracking
-            const paymentIntentId = session.payment_intent as string
-            
-            // Use the database function to add credits
-            const { error: addCreditsError } = await supabase.rpc('add_credits', {
-              user_id: userId,
-              amount: credits,
-              description: `Purchased ${credits} credits`,
-              package_id: packageId
-            })
-
-            if (addCreditsError) {
-              console.error('Error adding credits:', addCreditsError)
-            } else {
-              // Update the transaction with payment intent ID
-              if (paymentIntentId) {
-                await supabase
-                  .from('credit_transactions')
-                  .update({ stripe_payment_intent_id: paymentIntentId })
-                  .eq('user_id', userId)
-                  .eq('package_id', packageId)
-                  .eq('type', 'purchased')
-                  .order('created_at', { ascending: false })
-                  .limit(1)
+          if (user) {
+            finalUserId = user.id
+            console.log('Found user by customer ID:', finalUserId)
+          } else {
+            console.log('User not found by customer ID, trying email lookup...')
+            // Try by customer email
+            try {
+              const customer = await stripe.customers.retrieve(session.customer as string)
+              if (!customer.deleted && (customer as any).email) {
+                const { data: emailUser } = await supabase
+                  .from('users')
+                  .select('id')
+                  .eq('email', (customer as any).email)
+                  .single()
+                
+                if (emailUser) {
+                  finalUserId = emailUser.id
+                  console.log('Found user by email:', finalUserId)
+                }
               }
-              console.log(`Successfully added ${credits} credits for user ${userId}`)
+            } catch (error) {
+              console.error('Error retrieving customer:', error)
             }
           }
         }
+
+        // Verify this is a credit purchase and we have required data
+        if (type !== 'credits') {
+          console.log('Skipping: Not a credit purchase. Type:', type)
+          break
+        }
+
+        if (!finalUserId) {
+          console.error('Cannot process credit purchase: User ID not found', {
+            sessionId: session.id,
+            customerId: session.customer,
+            metadata: session.metadata
+          })
+          // Return 500 to trigger Stripe retry
+          throw new Error('User ID not found in checkout session')
+        }
+
+        if (!credits || credits <= 0) {
+          console.error('Cannot process credit purchase: Invalid credits amount', {
+            credits,
+            sessionId: session.id
+          })
+          throw new Error('Invalid credits amount')
+        }
+
+        // Get payment intent ID for tracking
+        const paymentIntentId = typeof session.payment_intent === 'string'
+          ? session.payment_intent
+          : (session.payment_intent as any)?.id
+
+        // Check if credits were already added (prevent double-crediting)
+        if (paymentIntentId) {
+          const { data: existingTransaction } = await supabase
+            .from('credit_transactions')
+            .select('id, amount')
+            .eq('stripe_payment_intent_id', paymentIntentId)
+            .maybeSingle()
+
+          if (existingTransaction) {
+            console.log('Credits already added for this payment intent. Skipping.', {
+              paymentIntentId,
+              transactionId: existingTransaction.id
+            })
+            // Already processed, return success
+            break
+          }
+        }
+
+        // Get current user credits
+        const { data: currentUser, error: fetchError } = await supabase
+          .from('users')
+          .select('credits, total_credits_purchased')
+          .eq('id', finalUserId)
+          .single()
+
+        if (fetchError || !currentUser) {
+          console.error('Error fetching user:', fetchError)
+          throw new Error(`Failed to fetch user: ${fetchError?.message}`)
+        }
+
+        console.log('Adding credits:', {
+          userId: finalUserId,
+          currentCredits: currentUser.credits,
+          creditsToAdd: credits,
+          packageId
+        })
+
+        // Update credits directly in users table
+        const { error: updateError } = await supabase
+          .from('users')
+          .update({
+            credits: (currentUser.credits || 0) + credits,
+            total_credits_purchased: (currentUser.total_credits_purchased || 0) + credits
+          })
+          .eq('id', finalUserId)
+
+        if (updateError) {
+          console.error('Error updating user credits:', updateError)
+          throw new Error(`Failed to update credits: ${updateError.message}`)
+        }
+
+        // Create transaction record
+        const { error: transactionError } = await supabase
+          .from('credit_transactions')
+          .insert({
+            user_id: finalUserId,
+            type: 'purchased',
+            amount: credits,
+            description: `Purchased ${credits} credits`,
+            package_id: packageId || null,
+            stripe_payment_intent_id: paymentIntentId || null
+          })
+
+        if (transactionError) {
+          console.error('Error creating transaction record:', transactionError)
+          // Transaction record creation failed, but credits were added
+          // Log it but don't throw (credits are already added)
+          console.warn('Credits added but transaction record creation failed')
+        }
+
+        console.log(`Successfully added ${credits} credits for user ${finalUserId}`)
         break
       }
 
