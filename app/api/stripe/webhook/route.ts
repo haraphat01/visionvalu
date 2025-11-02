@@ -3,6 +3,10 @@ import { stripe } from '@/lib/stripe'
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
+// Ensure webhook uses Node.js runtime (not edge) for better compatibility
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: Request) {
   const body = await request.text()
   const signature = request.headers.get('stripe-signature')!
