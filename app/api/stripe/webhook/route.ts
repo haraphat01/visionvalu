@@ -1,3 +1,4 @@
+import { createClient as createAdminClient } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/server'
 import { stripe } from '@/lib/stripe'
 import { NextResponse } from 'next/server'
@@ -24,12 +25,26 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid signature' }, { status: 400 })
   }
 
+  // Use a service-role client inside the webhook to bypass RLS for server-to-server updates
+  const adminSupabase = createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+  // Keep a cookie-based client available if ever needed (not used for writes here)
   const supabase = await createClient()
 
   try {
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session
+
+        console.log('Checkout session completed:', {
+          sessionId: session.id,
+          paymentStatus: session.payment_status,
+          metadata: session.metadata,
+          customer: session.customer,
+          paymentIntent: session.payment_intent
+        })
 
         if (session.payment_status !== 'paid') break
 
@@ -53,7 +68,7 @@ export async function POST(request: Request) {
         let finalUserId = userId
 
         if (!finalUserId && session.customer) {
-          const { data: user } = await supabase
+          const { data: user } = await adminSupabase
             .from('users')
             .select('id')
             .eq('stripe_customer_id', session.customer as string)
@@ -67,7 +82,7 @@ export async function POST(request: Request) {
                 session.customer as string
               )
               if (!customer.deleted && (customer as any).email) {
-                const { data: emailUser } = await supabase
+                const { data: emailUser } = await adminSupabase
                   .from('users')
                   .select('id')
                   .eq('email', (customer as any).email)
@@ -79,6 +94,13 @@ export async function POST(request: Request) {
             }
           }
         }
+
+        console.log('Final user resolution:', {
+          finalUserId,
+          credits,
+          type,
+          originalUserId: userId
+        })
 
         if (type !== 'credits' || !finalUserId || !credits || credits <= 0) {
           console.error('Invalid credit purchase data', {
@@ -104,18 +126,95 @@ export async function POST(request: Request) {
           if (existingTransaction) break
         }
 
-        const { data: currentUser, error: fetchError } = await supabase
+        let { data: currentUser, error: fetchError } = await adminSupabase
           .from('users')
           .select('credits, total_credits_purchased')
           .eq('id', finalUserId)
           .single()
 
         if (fetchError || !currentUser) {
-          console.error('Failed to fetch user:', fetchError)
-          throw new Error(`User fetch failed: ${fetchError?.message}`)
+          console.error('Failed to fetch user:', {
+            error: fetchError,
+            finalUserId,
+            sessionCustomer: session.customer
+          })
+
+          // Try to find user by email if customer exists
+          if (session.customer) {
+            try {
+              const customer = await stripe.customers.retrieve(session.customer as string)
+              if (!customer.deleted && (customer as any).email) {
+                console.log('Attempting to find user by email:', (customer as any).email)
+                const { data: emailUser, error: emailError } = await adminSupabase
+                  .from('users')
+                  .select('id, credits, total_credits_purchased')
+                  .eq('email', (customer as any).email)
+                  .single()
+
+                if (emailUser && !emailError) {
+                  console.log('Found user by email:', emailUser.id)
+                  finalUserId = emailUser.id
+                  currentUser = emailUser
+                  fetchError = null
+                } else {
+                  console.error('Could not find user by email either:', emailError)
+                  throw new Error(`User not found: ${finalUserId}, email lookup failed: ${emailError?.message}`)
+                }
+              } else {
+                throw new Error(`User fetch failed: ${fetchError?.message}`)
+              }
+            } catch (customerError) {
+              console.error('Error retrieving customer for email lookup:', customerError)
+              throw new Error(`User fetch failed: ${fetchError?.message}`)
+            }
+          } else {
+            throw new Error(`User fetch failed: ${fetchError?.message}`)
+          }
         }
 
-        const { error: updateError } = await supabase
+        if (!currentUser) {
+          // Last resort: create user if we have customer email
+          if (session.customer) {
+            try {
+              const customer = await stripe.customers.retrieve(session.customer as string)
+              if (!customer.deleted && (customer as any).email) {
+                console.log('Creating new user from Stripe customer:', (customer as any).email)
+
+                // Generate a new UUID for the user (this might be the issue - we need the actual auth user ID)
+                const { data: newUser, error: createError } = await adminSupabase
+                  .from('users')
+                  .insert({
+                    id: finalUserId, // Use the finalUserId from metadata
+                    email: (customer as any).email,
+                    full_name: (customer as any).name || (customer as any).email.split('@')[0],
+                    credits: 0,
+                    total_credits_purchased: 0,
+                    stripe_customer_id: session.customer as string,
+                    subscription_status: 'inactive',
+                  })
+                  .select('credits, total_credits_purchased')
+                  .single()
+
+                if (createError) {
+                  console.error('Failed to create user:', createError)
+                  throw new Error(`Failed to create user: ${createError.message}`)
+                }
+
+                currentUser = newUser
+                console.log('User created successfully:', finalUserId)
+              } else {
+                throw new Error('User not found and no customer email available')
+              }
+            } catch (error) {
+              console.error('Failed to create user from customer:', error)
+              throw new Error('User not found after all lookup attempts')
+            }
+          } else {
+            throw new Error('User not found after all lookup attempts')
+          }
+        }
+
+        const { error: updateError } = await adminSupabase
           .from('users')
           .update({
             credits: (currentUser.credits || 0) + credits,
@@ -129,7 +228,7 @@ export async function POST(request: Request) {
           throw new Error(`Credit update failed: ${updateError.message}`)
         }
 
-        const { error: transactionError } = await supabase
+        const { error: transactionError } = await adminSupabase
           .from('credit_transactions')
           .insert({
             user_id: finalUserId,
