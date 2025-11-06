@@ -11,7 +11,7 @@ const FeaturesOverview: React.FC = () => {
     {
       icon: '💵',
       title: 'Save Thousands of Dollars',
-      description: 'Traditional appraisals cost $300-$600. Get the same accuracy for just $2 per valuation. Save up to 98% on valuation costs.',
+      description: 'Traditional appraisals cost $300-$600. Get the same accuracy for just $5 per valuation. Save up to 98% on valuation costs.',
       benefits: ['$300 vs $2 per report', 'No hidden fees', 'Pay only what you use']
     },
     {

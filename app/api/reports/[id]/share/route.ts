@@ -14,8 +14,8 @@ export async function POST(
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  // Verify the report belongs to the user
-  const { data: report, error: reportError } = await supabase
+  // Verify the report belongs to the user (DB id first, then fallback to embedded id)
+  let { data: report, error: reportError } = await supabase
     .from('reports')
     .select('id, user_id')
     .eq('id', params.id)
@@ -23,7 +23,18 @@ export async function POST(
     .single()
 
   if (reportError || !report) {
-    return NextResponse.json({ error: 'Report not found' }, { status: 404 })
+    const { data: byEmbedded, error: byEmbeddedErr } = await supabase
+      .from('reports')
+      .select('id, user_id')
+      .eq('user_id', user.id)
+      .contains('report_data', { id: params.id })
+      .single()
+
+    if (byEmbeddedErr || !byEmbedded) {
+      return NextResponse.json({ error: 'Report not found' }, { status: 404 })
+    }
+
+    report = byEmbedded
   }
 
   // Generate a unique share token
@@ -34,7 +45,7 @@ export async function POST(
   const { data: fullReport, error: fetchError } = await supabase
     .from('reports')
     .select('report_data')
-    .eq('id', params.id)
+    .eq('id', report.id)
     .single()
 
   if (fetchError || !fullReport) {
@@ -57,7 +68,7 @@ export async function POST(
     return NextResponse.json({ error: updateError.message }, { status: 500 })
   }
 
-  const shareUrl = `${request.headers.get('origin') || process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/share/${shareToken}`
+  const shareUrl = `${request.headers.get('origin') || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/share/${shareToken}`
 
   return NextResponse.json({ shareUrl, shareToken })
 }

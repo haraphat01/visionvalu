@@ -151,7 +151,7 @@ const BuyerSellerSection: React.FC = () => {
               Ready to Make Smarter Real Estate Decisions?
             </h3>
             <p className="text-blue-100 text-lg mb-6 max-w-2xl mx-auto">
-              Join thousands of buyers and sellers who trust HomeWorth for instant, accurate property valuations.
+              Join 100+ buyers and sellers who trust HomeWorth for instant, accurate property valuations.
             </p>
             <a 
               href="/signup"

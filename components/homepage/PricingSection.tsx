@@ -55,10 +55,10 @@ const PricingSection: React.FC = () => {
             Simple, <span className="gradient-text">Transparent Pricing</span>
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-4">
-            Compare: Traditional appraisals cost $300-$600 and take 2-4 weeks. Get the same accuracy for just <strong className="text-slate-900">$2 per valuation</strong> in 30 seconds.
+            Compare: Traditional appraisals cost $300-$600 and take 2-4 weeks. Get the same accuracy for just <strong className="text-slate-900">$5 per valuation</strong> in 30 seconds.
           </p>
           <div className="inline-flex items-center px-5 py-2.5 bg-green-50 border-2 border-green-300 rounded-full">
-            <span className="text-green-800 font-bold">🎁 New users: Start with 5 FREE valuations ($10 value)</span>
+            <span className="text-green-800 font-bold">🎁 New users: Start with 5 FREE credits ($10 value)</span>
           </div>
         </div>
 

@@ -35,7 +35,7 @@ const HeroSection: React.FC<HeroSectionProps> = () => {
             
             {/* Value Prop */}
             <div className="mb-8 inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-green-100 to-emerald-100 rounded-full border border-green-300">
-              <span className="text-green-800 font-bold text-sm">🎁 Start with 5 FREE valuations - No credit card needed</span>
+              <span className="text-green-800 font-bold text-sm">🎁 Start with 5 FREE credits - No credit card needed</span>
             </div>
 
             {/* CTA Buttons */}

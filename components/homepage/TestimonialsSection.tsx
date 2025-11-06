@@ -60,7 +60,7 @@ const TestimonialsSection: React.FC = () => {
 
   const stats = [
     { number: '4.9/5', label: 'Average Rating', icon: '⭐' },
-    { number: '10K+', label: 'Happy Customers', icon: '😊' },
+    { number: '10+', label: 'Happy Customers', icon: '😊' },
     { number: '95%', label: 'Accuracy Rate', icon: '🎯' },
     { number: '30s', label: 'Average Time', icon: '⚡' }
   ];
@@ -115,10 +115,10 @@ const TestimonialsSection: React.FC = () => {
         </div>
 
         {/* Trust Indicators */}
-        <div className="bg-slate-50 rounded-2xl p-8 lg:p-12">
+        {/* <div className="bg-slate-50 rounded-2xl p-8 lg:p-12">
           <div className="text-center mb-8">
             <h3 className="text-2xl font-bold text-slate-900 mb-4">
-              Trusted by Industry Leaders
+              Happy Customers
             </h3>
             <p className="text-slate-600">
               Our AI technology is used by top real estate companies and professionals nationwide.
@@ -139,7 +139,7 @@ const TestimonialsSection: React.FC = () => {
               <div className="text-2xl font-bold text-slate-700">Century 21</div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* CTA */}
         <div className="text-center mt-16">
@@ -147,7 +147,7 @@ const TestimonialsSection: React.FC = () => {
             Ready to Experience the Future of Property Valuation?
           </h3>
           <p className="text-slate-600 mb-8">
-            Join thousands of satisfied customers and start getting accurate valuations today.
+            Join 100+ of satisfied customers and start getting accurate valuations today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="/signup" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-lg text-lg transition-colors duration-200 shadow-lg hover:shadow-xl text-center">

@@ -57,6 +57,8 @@ export interface ValuationResult {
   sources?: GroundingSource[];
   userId?: string;
   detailedReport?: string;
+  // Hash of input (images + property details) for idempotency
+  inputHash?: string;
 }
 
 export interface User {

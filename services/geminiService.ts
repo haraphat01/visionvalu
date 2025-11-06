@@ -117,6 +117,46 @@ const valuationSchema = {
   ],
 };
 
+function validateAndNormalizeValuation(input: any): Omit<ValuationResult, 'id' | 'timestamp' | 'previewImage' | 'propertyDetails'> {
+  if (!input || typeof input !== 'object') {
+    throw new Error('Invalid valuation payload.');
+  }
+  const errors: string[] = [];
+  const range = input.estimatedValueRange;
+  if (!range || typeof range.min !== 'number' || typeof range.max !== 'number') {
+    errors.push('Estimated value range is missing or not numeric.');
+  } else {
+    if (range.min <= 0 || range.max <= 0) errors.push('Estimated values must be positive.');
+    if (range.min > range.max) errors.push('Estimated min cannot exceed max.');
+    const width = (range.max - range.min) / Math.max(range.max, 1);
+    if (width < 0.01) errors.push('Estimated range is unrealistically tight.');
+    if (width > 0.6) errors.push('Estimated range is too wide to be useful.');
+  }
+  if (typeof input.confidenceScore !== 'number') {
+    errors.push('Confidence score missing.');
+  } else {
+    if (input.confidenceScore < 0 || input.confidenceScore > 100) {
+      input.confidenceScore = Math.min(100, Math.max(0, input.confidenceScore));
+    }
+  }
+  if (typeof input.currency !== 'string' || input.currency.length < 3) {
+    errors.push('Currency missing.');
+  }
+  if (typeof input.reasoning !== 'string' || input.reasoning.trim() === '') {
+    errors.push('Reasoning missing.');
+  }
+  if (errors.length > 0) {
+    throw new Error(`Valuation validation failed: ${errors.join(' ')}`);
+  }
+  input.detectedFeatures = Array.isArray(input.detectedFeatures) ? input.detectedFeatures : [];
+  input.keyValueDrivers = Array.isArray(input.keyValueDrivers) ? input.keyValueDrivers : [];
+  input.potentialConcerns = Array.isArray(input.potentialConcerns) ? input.potentialConcerns : [];
+  input.suggestedUpgrades = Array.isArray(input.suggestedUpgrades) ? input.suggestedUpgrades : [];
+  if (input.sources && !Array.isArray(input.sources)) {
+    input.sources = [];
+  }
+  return input as Omit<ValuationResult, 'id' | 'timestamp' | 'previewImage' | 'propertyDetails'>;
+}
 
 export const getPropertyValuation = async (images: string[], details: PropertyDetails): Promise<Omit<ValuationResult, 'id' | 'timestamp' | 'previewImage' | 'propertyDetails'>> => {
   const imageParts = images.map(base64Data => ({
@@ -227,11 +267,9 @@ export const getPropertyValuation = async (images: string[], details: PropertyDe
     const jsonText = response.text.trim();
     // If grounding is used, the model might wrap the JSON in markdown backticks.
     const cleanJsonText = jsonText.replace(/^```json\s*|```$/g, '');
-    const valuationData = JSON.parse(cleanJsonText);
-    
-    if (!valuationData.estimatedValueRange || !valuationData.reasoning) {
-        throw new Error("Incomplete valuation data received from AI.");
-    }
+    const parsed = JSON.parse(cleanJsonText);
+
+    const valuationData = validateAndNormalizeValuation(parsed);
     
     if (useGrounding) {
       const groundingChunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks;
